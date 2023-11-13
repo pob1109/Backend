@@ -1,24 +1,28 @@
 import { Schema } from "mongoose";
 
-const CommentSchema = new Schema(
+const UserSchema = new Schema(
   {
+    id: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
     nickname: {
       type: String,
       required: true,
     },
-    content: {
-      type: String,
+    isAdmin:{
+      type: Boolean,
       required: true,
-    },
-    postId: {
-      type: String,
-      required: true,
-    },
+    }
   },
   {
     timestamps: true,
-    collection: "comment" // 몽고디비 컬렉션 이름 설정
+    collection: "user"
   }
 );
 
-export { CommentSchema };
+export { UserSchema };
