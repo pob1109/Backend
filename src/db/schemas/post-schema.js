@@ -3,7 +3,7 @@ import { Schema } from "mongoose";
 const PostSchema = new Schema(
   {
     board_category: {
-      type: Number,
+      type: Number,   // 0, 1
       required: true,
     },
     product_category: {
