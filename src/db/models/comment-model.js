@@ -17,7 +17,7 @@ export class CommentModel{
         const removedComment = await Comment.delete({shortId : commentId})
         // mongoDB에서 id를 어떤 이름으로 지정하는지 확인
 
-        return { result : deleted};
+        return { result : deleted };
     }
 
     /* 코멘트 변경
@@ -27,10 +27,24 @@ export class CommentModel{
         return updatedComment;
     }
 
-    /* 코멘트 찾기 (마이페이지)
+    /* 코멘트 보기 (마이페이지)
     사용자 닉네임*/
-    async findComment(nickname){
-        const findedComment = await Comment.find({nickname : nickname})
-        return findedComment;
+    async findMyComment(nickname){
+        const findedMyComment = await Comment.find({nickname : nickname})
+        return findedMyComment;
+    }
+
+    /* 모든 코멘트 보기 (관리자)
+    사용자 닉네임*/
+    async findAllComment(){
+        const findedAllComment = await Comment.find({})
+        return findedAllComment;
+    }
+
+    /* 글에서 코멘트 보기
+    게시글id */
+    async findPostComment(postId){
+        const findedPostComment = await Comment.find({postId : postId})
+        return findedPostComment;
     }
 }

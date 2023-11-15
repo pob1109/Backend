@@ -1,21 +1,50 @@
 const express = require('express')
-const router = express.Router();
+const commentRouter = express.Router();
+
 import CommentModel from '../db/models/comment-model'
 
 
-router.get('/comment', async (req, res, next) => {
+//마이페이지 - 작성한 댓글 가져오기
+commentRouter.get('/comment/:nickname', async (req, res, next) => {
     try {
         const findedComment
-         = CommentModel.findComment(req.body.nickname)
+         = await CommentModel.findMyComment(req.body.nickname)
 
-         res.send(findedComment);
+         res.status(200).send(findedComment);
     } catch (e) {
         next(e)
     }
-
 })
 
-router.post('/comment', async (req, res, next) => {
+
+//게시글에서 댓글 가져오기
+commentRouter.get('/comment/:postId', async (req, res, next) => {
+    try {
+        const findedPostComment
+         = await CommentModel.findPostComment()
+
+         res.status(200).send(findedPostComment);
+    } catch (e) {
+        next(e)
+    }
+})
+
+
+ //관리자페이지에서 전체 댓글 보기
+commentRouter.get('/comment', async (req, res, next) => {
+    try {
+        const findedAllComment
+         = await CommentModel.findAllComment()
+
+         res.status(200).send(findedAllComment);
+    } catch (e) {
+        next(e)
+    }
+})
+
+
+//댓글 달기
+commentRouter.post('/comment/:postId', async (req, res, next) => {
     try {
         const newComment = {
             nickname: req.body.nickname,
@@ -26,14 +55,15 @@ router.post('/comment', async (req, res, next) => {
         const createdNewComment
          = await CommentModel.createComment(newComment)
 
-        res.send(createdNewComment);
+        res.status(200).send(createdNewComment);
     } catch (e) {
         next(e)
     }
-
 })
 
-router.put('/comment/:commentId', async (req, res, next) => {
+
+//댓글 수정하기
+commentRouter.put('/comment/:postId', async (req, res, next) => {
     try {
         const comment = {
             commentId: req.body.commentId,
@@ -42,20 +72,23 @@ router.put('/comment/:commentId', async (req, res, next) => {
         const changedComment
          = await CommentModel.updateComment(comment)
 
-        res.send(changedComment)
+        res.status(200).send(changedComment)
     } catch (e) {
         next(e)
     }
 })
 
-router.delete('/comment/:commentId', async (req, res, next) => {
+
+// 댓글 삭제하기
+commentRouter.delete('/comment/:postid/:commentid', async (req, res, next) => {
     try {
         const deleted
-         = CommentModel.removeComment(req.body.commentId);
-        req.send(deleted);
+         = await CommentModel.removeComment(req.body.commentId);
+        req.status(200).json(deleted);
     } catch (e) {
         next(e)
     }
 })
 
 
+export {commentRouter};
