@@ -42,7 +42,18 @@ userRouter.post('/join', async (req,res,next)=>{
     try{
         const {email,nickname,password}=req.body
         await userService.joinUser(email,nickname,password)
-        res.status(201).send("success");
+        res.status(201).send("success")
+    }catch(err){
+        next(err);
+    }
+})
+
+userRouter.put('/',checkToken,async (req,res,next)=>{
+    try{
+        const userId = req.params.userId;
+        const {email,nickname,password}=req.body
+        await userService.modifyUser(userId,email,nickname,password)
+        res.status(201).send("success")
     }catch(err){
         next(err);
     }
@@ -53,7 +64,7 @@ userRouter.delete('/',checkToken,async (req,res,next)=>{
     try{
         const userId = req.params.userId;
         await userService.delUser(userId);
-        res.status(204).send("success");
+        res.status(204).send();
     }catch(err){
         next(err);
     }

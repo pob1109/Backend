@@ -65,6 +65,23 @@ class UserService{
         }
     }
 
+    async modifyUser(id,email,nickname,password){ //회원가입
+        
+        try{
+            const hashedPassword = await bcrypt.hash(password, 5);
+            const newUser = {
+                email:email,
+                nickname:nickname,
+                password:hashedPassword,
+            }
+            await User.findByIdAndUpdate(id,newUser);
+            return;
+        }catch(err){
+            console.log("joinUser 오류:")
+            throw err;
+        }
+    }
+
     async delUser(id){ //토큰으로 id를 받아 유저 삭제
         try{
             await User.findByIdAndDelete(new ObjectId(id));
