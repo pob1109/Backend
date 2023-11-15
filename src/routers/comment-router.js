@@ -84,7 +84,7 @@ commentRouter.delete('/comment/:postid/:commentid', async (req, res, next) => {
     try {
         const deleted
          = await CommentModel.removeComment(req.body.commentId);
-        req.status(200).json(deleted);
+        res.status(200).json(deleted);
     } catch (e) {
         next(e)
     }
