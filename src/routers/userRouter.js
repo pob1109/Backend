@@ -1,16 +1,62 @@
 import { Router } from "express";
 import { userService } from "../services/userService.js";
+import { checkToken } from "../middlewares/checkToken.js";
 
 const userRouter = Router();
 
-userRouter.get('/', async (req,res)=>{
-    const userData = await userService.getUsers()
-    res.send(userData);
+//전체 유저검색
+userRouter.get('/', async (req,res,next)=>{
+    try{
+        const {page,pageSize}=req.query;
+        const userData = await userService.getUsers(page,pageSize);
+        res.status(200).send(userData);
+    }catch(err){
+        next(err);
+    }
 })
 
-userRouter.post('/join', async (req,res)=>{
-    await userService.joinUser()
-    res.status(201).send("success");
+//특정 유저검색
+userRouter.get('/detail',checkToken,async (req,res,next)=>{
+    try{
+        const userId = req.params.userId;
+        const userData = await userService.getUser(userId);
+        res.status(200).send(userData);
+    }catch(err){
+        next(err);
+    }
+})
+
+//로그인
+userRouter.post('/login', async (req,res,next)=>{
+    try{
+        const {email,password}=req.body
+        const token=await userService.loginUser(email,password)
+        res.status(200).json(token);
+    }catch(err){
+        next(err);
+    }
+})
+
+//회원가입
+userRouter.post('/join', async (req,res,next)=>{
+    try{
+        const {email,nickname,password}=req.body
+        await userService.joinUser(email,nickname,password)
+        res.status(201).send("success");
+    }catch(err){
+        next(err);
+    }
+})
+
+//유저탈퇴
+userRouter.delete('/',checkToken,async (req,res,next)=>{
+    try{
+        const userId = req.params.userId;
+        await userService.delUser(userId);
+        res.status(204).send("success");
+    }catch(err){
+        next(err);
+    }
 })
 
 export {userRouter};
