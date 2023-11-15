@@ -6,27 +6,29 @@ import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId; //id string 값을 objectid 형식으로 바꿈
 
 class UserService{
-    async getUsers(page,pageSize){
+    async getUsers(page,pageSize){ //전체 유저를 현재page 기준으로 pageSize만큼만 전송
         try{
             const MaxPost = Number(pageSize)
             const hidePost = (Number(page)-1)*MaxPost
             const usersData = await User.find({}).skip(hidePost).limit(MaxPost);
             return usersData;
         }catch(err){
+            console.log("getUsers 오류:")
             throw err;
         }
     }
 
-    async getUser(id){
+    async getUser(id){ //토큰으로 받은 id로 특정 유저 정보 전송
         try{
             const usersData = await User.findById(new ObjectId(id))
             return usersData;
         }catch(err){
+            console.log("getUser 오류:")
             throw err;
         }
     }
 
-    async loginUser(email,password){
+    async loginUser(email,password){ //email과 패스워드를 확인하고 userId 기준으로 토큰 발행
 
         try{
             const data = await User.findOne({email});
@@ -40,12 +42,13 @@ class UserService{
             }
             return;
         }catch(err){
+            console.log("loginUser 오류:")
             throw err;
         }
     }
 
 
-    async joinUser(email,nickname,password){
+    async joinUser(email,nickname,password){ //회원가입
         
         try{
             const hashedPassword = await bcrypt.hash(password, 5);
@@ -57,15 +60,17 @@ class UserService{
             await User.create(newUser);
             return;
         }catch(err){
+            console.log("joinUser 오류:")
             throw err;
         }
     }
 
-    async delUser(id){
+    async delUser(id){ //토큰으로 id를 받아 유저 삭제
         try{
             await User.findByIdAndDelete(new ObjectId(id));
             return;
         }catch(err){
+            console.log("delUser 오류:")
             throw err;
         }
     }
