@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { userService } from "../services/userService.js";
 import { checkToken } from "../middlewares/checkToken.js";
+import { isAdmin } from "../middlewares/isAdmin.js";
 
 const userRouter = Router();
 
-//전체 유저검색
+//전체 유저검색(관리자용)
 userRouter.get('/', async (req,res,next)=>{
     try{
         const {page,pageSize}=req.query;
@@ -48,6 +49,7 @@ userRouter.post('/join', async (req,res,next)=>{
     }
 })
 
+//회원정보수정
 userRouter.put('/',checkToken,async (req,res,next)=>{
     try{
         const userId = req.params.userId;
@@ -61,6 +63,17 @@ userRouter.put('/',checkToken,async (req,res,next)=>{
 
 //유저탈퇴
 userRouter.delete('/',checkToken,async (req,res,next)=>{
+    try{
+        const userId = req.params.userId;
+        await userService.delUser(userId);
+        res.status(204).send();
+    }catch(err){
+        next(err);
+    }
+})
+
+//회원강제탈퇴(관리자용)
+userRouter.delete('/:userId',checkToken,isAdmin,async (req,res,next)=>{
     try{
         const userId = req.params.userId;
         await userService.delUser(userId);

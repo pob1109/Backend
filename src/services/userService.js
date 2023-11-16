@@ -29,13 +29,16 @@ class UserService{
     }
 
     async loginUser(email,password){ //email과 패스워드를 확인하고 userId 기준으로 토큰 발행
-
         try{
             const data = await User.findOne({email});
+
+            
+
             const userId=String(data._id);
+            const status=data.status;
             const check = await bcrypt.compare(password,data.password)
             if(check){
-                const token= jwt.sign({userId},process.env.jwt_key,{expiresIn:"1h"});
+                const token= jwt.sign({userId,status},process.env.jwt_key,{expiresIn:"1h"});
                 return {
                     token:token
                 };
@@ -65,7 +68,7 @@ class UserService{
         }
     }
 
-    async modifyUser(id,email,nickname,password){ //회원가입
+    async modifyUser(id,email,nickname,password){ //회원정보 수정
         
         try{
             const hashedPassword = await bcrypt.hash(password, 5);
