@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 const Comment = mongoose.model("comment",CommentSchema);
 
-export class CommentModel{
+class CommentModel{
     /* 새 코멘트 생성
     { 사용자 닉네임, 내용(콘텐트), 게시글id } */
     async createComment(commentInfo){
@@ -54,3 +54,6 @@ export class CommentModel{
         return findedPostComment;
     }
 }
+
+const commentModel = new commentModel();
+export {commentModel}
