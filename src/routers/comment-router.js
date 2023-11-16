@@ -51,7 +51,7 @@ commentRouter.post('/comment/:postId', async (req, res, next) => {
             content: req.body.content,
             postId: req.body.postId,
         }
-
+        console.log(req.body)
         const createdNewComment
          = await CommentModel.createComment(newComment)
 
