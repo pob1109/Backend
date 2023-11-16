@@ -1,14 +1,13 @@
 import { Schema } from "mongoose";
 export const PostSchema = new Schema({
-    board_category:{type:String,required: true},
+    board_category:{type:Number,required: true},
     product_category:{type:String,required: true},
     event_date:{type:String},
     event_location:{type:String},
     nickname:{type:String,required: true},
     title:{type:String,required: true},
     content:{type:String,required: true},
-    img:{type:String},
-    date:{type:String,default:new Date()},
+    picture:{type:String},
     isFound:{type:Boolean,defalut:false}
-},{versionKey : false})
+},{versionKey : false,timestamps: true,collection: "posts"})
 
