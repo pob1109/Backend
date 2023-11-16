@@ -17,11 +17,11 @@ commentRouter.get('/comment/:nickname', async (req, res, next) => {
 })
 
 
-//게시글에서 댓글 가져오기
+//게시글 - 댓글 가져오기
 commentRouter.get('/comment/:postId', async (req, res, next) => {
     try {
         const findedPostComment
-         = await CommentModel.findPostComment()
+         = await CommentModel.findPostComment(req.body.postId)
 
          res.status(200).send(findedPostComment);
     } catch (e) {
@@ -30,7 +30,7 @@ commentRouter.get('/comment/:postId', async (req, res, next) => {
 })
 
 
- //관리자페이지에서 전체 댓글 보기
+ //관리자페이지 - 전체 댓글 보기
 commentRouter.get('/comment', async (req, res, next) => {
     try {
         const findedAllComment
@@ -66,8 +66,9 @@ commentRouter.post('/comment/:postId', async (req, res, next) => {
 commentRouter.put('/comment/:postId', async (req, res, next) => {
     try {
         const comment = {
-            commentId: req.body.commentId,
-            updateContent : req.body.content
+            nickname : req.body.nickname,
+            updateContent : req.body.content,
+            postId: req.body.postId,
         }
         const changedComment
          = await CommentModel.updateComment(comment)
@@ -79,11 +80,12 @@ commentRouter.put('/comment/:postId', async (req, res, next) => {
 })
 
 
-// 댓글 삭제하기
+// 게시글 - 댓글 삭제하기
 commentRouter.delete('/comment/:postid/:commentid', async (req, res, next) => {
     try {
         const deleted
          = await CommentModel.removeComment(req.body.commentId);
+         
         res.status(200).json(deleted);
     } catch (e) {
         next(e)

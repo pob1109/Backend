@@ -8,6 +8,7 @@ export class CommentModel{
     { 사용자 닉네임, 내용(콘텐트), 게시글id } */
     async createComment(commentInfo){
         const createdComment = await Comment.create(commentInfo)
+        
         return createdComment;
     }
 
@@ -22,8 +23,10 @@ export class CommentModel{
 
     /* 코멘트 변경
     코멘트 id, 업데이트할 내용(콘텐트)*/
-    async updateComment({commentId, updateContent}){
-        const updatedComment = await Comment.findOneAndUpdate({shortId : commentId, content : updateContent})
+    async updateComment({nickname, updateContent, postId}){
+        const updatedComment
+         = await Comment.findOneAndUpdate({nickname : nickname, content : updateContent, postId : postId})
+
         return updatedComment;
     }
 
@@ -31,6 +34,7 @@ export class CommentModel{
     사용자 닉네임*/
     async findMyComment(nickname){
         const findedMyComment = await Comment.find({nickname : nickname})
+
         return findedMyComment;
     }
 
@@ -38,6 +42,7 @@ export class CommentModel{
     사용자 닉네임*/
     async findAllComment(){
         const findedAllComment = await Comment.find({})
+
         return findedAllComment;
     }
 
@@ -45,6 +50,7 @@ export class CommentModel{
     게시글id */
     async findPostComment(postId){
         const findedPostComment = await Comment.find({postId : postId})
+
         return findedPostComment;
     }
 }
