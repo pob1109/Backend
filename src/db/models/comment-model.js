@@ -1,4 +1,4 @@
-import { CommentSchema } from "../schemas/comment-schema";
+import { CommentSchema } from "../schemas/comment-schema.js";
 import mongoose from "mongoose";
 
 const Comment = mongoose.model("comment",CommentSchema);
@@ -55,5 +55,5 @@ class CommentModel{
     }
 }
 
-const commentModel = new commentModel();
-export {commentModel}
+const commentModel = new CommentModel();
+export {commentModel};

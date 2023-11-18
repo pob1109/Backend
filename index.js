@@ -7,10 +7,7 @@ dotenv.config();
 const PORT = process.env.PORT;
 
 mongoose
-  .connect(process.env.mongooseurl, {
-    //useNewUrlParser: true,
-    //useUnifiedTopology: true,
-  })
+  .connect(process.env.mongooseurl)
   .then(() => console.log("mongoDB 연결에 성공하였습니다"))
   .catch((err) => console.log("mongoDB 연결에 실패하였습니다" + err));
 
