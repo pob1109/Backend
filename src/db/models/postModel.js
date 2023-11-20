@@ -46,7 +46,7 @@ class PostModel{
     }
 
     /* 게시글 보기 (id)*/
-    async findAllPost(){
+    async findPost(){
         const findedAllPost = await Post.findOne({shortId})
 
         return findedAllPost;
