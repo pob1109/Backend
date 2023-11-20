@@ -10,9 +10,7 @@ app.use('/api/user',userRouter)
 app.use('/api/comment',commentRouter);
 
 app.use((err,req,res,next)=>{
-    const status = err.status ? err.status : 500;
-    const errMessage = err.message
-    console.error(status,errMessage);
-    res.status(status).send(errMessage);
+    console.log(err);
+    res.status(err.status || 500).send(err.message)
 })
 export {app};
