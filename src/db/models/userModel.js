@@ -21,7 +21,7 @@ class UserModel{
 
     async loginUser(userId){ //email과 패스워드를 확인하고 userId 기준으로 토큰 발행
         try{
-            const token= jwt.sign({userId},process.env.jwt_key,{expiresIn:"1h"});
+            const token= jwt.sign({userId},process.env.jwt_key,{expiresIn:"3h"});
             return token;
         }catch(err){
             throw err;

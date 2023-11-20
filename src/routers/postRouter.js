@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler"
 import { Router } from "express";
 import { postModel } from "../db/models/postModel";
 import { checkToken } from "../middlewares/checkToken";
+import multer from "multer"
 
 const postRouter = Router();
 

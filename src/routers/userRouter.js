@@ -26,7 +26,9 @@ userRouter.post('/login',checkLogin,asyncHandler(async (req,res,next)=>{
 
         const userId=req.user._id;
         const token=await userModel.loginUser(userId)
-        res.status(200).cookie("loginToken",token,{httpOnly:true}).send("success");
+        res.status(200)
+        .cookie("loginToken",token,{httpOnly:true,maxAge:1000*60*60*3})
+        .send("success");
 }))
 
 //회원가입
