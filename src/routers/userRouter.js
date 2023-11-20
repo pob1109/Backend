@@ -3,6 +3,8 @@ import { userModel } from "../db/models/usermodel.js";
 import { checkToken } from "../middlewares/checkToken.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
 import asyncHandler from "express-async-handler"
+import { checkLogin } from "../middlewares/checkLogin.js";
+
 
 const userRouter = Router();
 
@@ -20,11 +22,11 @@ userRouter.get('/detail',checkToken,asyncHandler(async (req,res,next)=>{
 }))
 
 //로그인
-userRouter.post('/login', asyncHandler(async (req,res,next)=>{
+userRouter.post('/login',checkLogin,asyncHandler(async (req,res,next)=>{
 
-        const {email,password}=req.body
-        const token=await userModel.loginUser(email,password)
-        res.status(200).json({token});
+        const userId=req.user._id;
+        const token=await userModel.loginUser(userId)
+        res.status(200).cookie("loginToken",token,{httpOnly:true}).send("success");
 }))
 
 //회원가입

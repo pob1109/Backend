@@ -2,7 +2,6 @@ import { UserSchema } from "../schemas/userSchema.js";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { errGenerator } from "../../../errGenerator.js";
 
 export const User = mongoose.model("User",UserSchema);
 const ObjectId = mongoose.Types.ObjectId;
@@ -20,21 +19,8 @@ class UserModel{
     }
 
 
-    async loginUser(email,password){ //email과 패스워드를 확인하고 userId 기준으로 토큰 발행
+    async loginUser(userId){ //email과 패스워드를 확인하고 userId 기준으로 토큰 발행
         try{
-            const data = await User.findOne({email});
-
-            if(!data){
-                throw errGenerator("아이디가 잘못되었습니다.",404,{});
-            }
-
-            const userId=String(data._id);
-            const check = await bcrypt.compare(password,data.password)
-
-            if(!check){
-                throw errGenerator("비밀번호가 잘못되었습니다.",404,{});
-            }
-            
             const token= jwt.sign({userId},process.env.jwt_key,{expiresIn:"1h"});
             return token;
         }catch(err){
@@ -84,7 +70,7 @@ class UserModel{
         }
     }
 
-    async delAdminUser(id){ // 유저 삭제
+    async delAdminUser(id){ // 유저 삭제(관리자용)
         try{
             await User.findByIdAndDelete(new ObjectId(id));
             return;
