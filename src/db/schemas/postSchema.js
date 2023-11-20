@@ -1,4 +1,6 @@
 import { Schema } from "mongoose";
+import {shortId} from "./shortId/shortId.js";
+
 export const PostSchema = new Schema(
     {
         board_category:{
@@ -33,7 +35,10 @@ export const PostSchema = new Schema(
         isFound:{
             type:Boolean,
             defalut:false
-        }
+        },
+        postId:{
+            ...shortId
+          },
     },
     {   versionKey : false,
         timestamps: true,

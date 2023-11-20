@@ -1,7 +1,7 @@
 import { PostSchema } from "../schemas/postSchema";
 import mongoose from "mongoose";
 
-const Post = mongoose.model("Post",PostSchema);
+const Post = mongoose.model("post",PostSchema);
 
 class PostModel{
     /* 새 게시글 생성 */

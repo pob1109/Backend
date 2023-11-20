@@ -14,11 +14,11 @@ class CommentModel{
 
     /* 코멘트 삭제
     코멘트 id*/
-    async removeComment(commentId){
-        const removedComment = await Comment.delete({shortId : commentId})
-        // mongoDB에서 id를 어떤 이름으로 지정하는지 확인
+    async removeComment(data){
+        const removedComment
+         = await Comment.findOneAndDelete({commentId : data})
 
-        return { result : deleted };
+        return { result : "deleted" };
     }
 
     /* 코멘트 변경
@@ -48,8 +48,8 @@ class CommentModel{
 
     /* 글에서 코멘트 보기
     게시글id */
-    async findPostComment(postId){
-        const findedPostComment = await Comment.find({postId : postId})
+    async findPostComment(data){
+        const findedPostComment = await Comment.find({postId : data})
 
         return findedPostComment;
     }

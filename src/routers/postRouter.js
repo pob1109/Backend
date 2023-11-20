@@ -7,7 +7,7 @@ import { isAdmin } from "../middlewares/isAdmin.js";
 
 
 //마이페이지 - 게시글 가져오기
-postRouter.get('/:nickname', checkToken, asyncHandler(async (req, res, next) => {
+postRouter.get('/:nickname',  asyncHandler(async (req, res, next) => {  //checkToken,
     const findedPost
         = await postModel.findMyPost(req.params.nickname)
 
@@ -16,7 +16,7 @@ postRouter.get('/:nickname', checkToken, asyncHandler(async (req, res, next) => 
 
 
 //게시글 가져오기
-postRouter.get('/:postId', asyncHandler(async (req, res, next) => {
+postRouter.get('/:postId', asyncHandler(async (req, res, next) => {  
 
     const findedPost
         = await postModel.findPost(req.params.postId)
@@ -26,7 +26,7 @@ postRouter.get('/:postId', asyncHandler(async (req, res, next) => {
 
 
 //관리자페이지 - 게시글 보기
-postRouter.get('/', isAdmin, asyncHandler(async (req, res, next) => {
+postRouter.get('/', asyncHandler(async (req, res, next) => {  // isAdmin,
 
     const findedAllPost
         = await postModel.findAllPost()
@@ -36,7 +36,7 @@ postRouter.get('/', isAdmin, asyncHandler(async (req, res, next) => {
 
 
 //게시글 작성
-postRouter.post('/post', checkToken, asyncHandler(async (req, res, next) => {
+postRouter.post('/post', asyncHandler(async (req, res, next) => { //checkToken, 
     const newPost = {
         board_category: req.body.board_category,
         product_category: req.body.product_category,
@@ -57,7 +57,7 @@ postRouter.post('/post', checkToken, asyncHandler(async (req, res, next) => {
 
 
 //게시글 수정하기
-postRouter.put('/:postId', checkToken, asyncHandler(async (req, res, next) => {
+postRouter.put('/:postId', asyncHandler(async (req, res, next) => { //checkToken, 
 
     const post = {
         board_category: req.body.board_category,
@@ -78,7 +78,7 @@ postRouter.put('/:postId', checkToken, asyncHandler(async (req, res, next) => {
 
 
 // 게시글 삭제하기
-postRouter.delete('/:postId', checkToken, isAdmin, asyncHandler(async (req, res, next) => {
+postRouter.delete('/:postId', asyncHandler(async (req, res, next) => { //checkToken, isAdmin, 
 
     const deleted
         = await postModel.removePost(req.params.postId);
