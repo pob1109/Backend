@@ -1,5 +1,7 @@
+import { errGenerator } from "../../../errGenerator";
 import { PostSchema } from "../schemas/postSchema";
 import mongoose from "mongoose";
+import { errGenerator } from "../../../errGenerator";
 
 const Post = mongoose.model("Post",PostSchema);
 
