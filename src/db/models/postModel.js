@@ -1,4 +1,4 @@
-import { PostSchema } from "../schemas/postSchema";
+import { PostSchema } from "../schemas/postSchema.js";
 import mongoose from "mongoose";
 
 const Post = mongoose.model("post",PostSchema);
@@ -6,6 +6,7 @@ const Post = mongoose.model("post",PostSchema);
 class PostModel{
     /* 새 게시글 생성 */
     async createPost(postInfo){
+        console.log(postInfo)
         const createdPost = await Post.create(postInfo)
         
         return createdPost;
@@ -13,8 +14,8 @@ class PostModel{
 
     /* 게시글 삭제
     게시글 id*/
-    async removePost(postId){
-        const removedPost = await Post.delete({shortId : postId})
+    async removePost(data){
+        const removedPost = await Post.delete({postId:data})
         // mongoDB에서 id를 어떤 이름으로 지정하는지 확인
 
         return { result : deleted };
@@ -22,10 +23,10 @@ class PostModel{
 
     /* 게시글 변경
      업데이트할 게시글 내용, object화 id*/
-    async updatePost(post){
-    
+    async updatePost(data){
+     
         const updatedPost
-         = await Comment.findOneAndUpdate({shortId},post)
+         = await Comment.findOneAndUpdate({postId:postId},post)
 
         return updatedPost;
     }
@@ -46,8 +47,8 @@ class PostModel{
     }
 
     /* 게시글 보기 (id)*/
-    async findPost(){
-        const findedAllPost = await Post.findOne({shortId})
+    async findPost(data){
+        const findedAllPost = await Post.findOne({postId:data})
 
         return findedAllPost;
     }

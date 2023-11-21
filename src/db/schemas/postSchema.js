@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
 import {shortId} from "./shortId/shortId.js";
 
-export const PostSchema = new Schema(
+const PostSchema = new Schema(
     {
         board_category:{
             type:Number,
