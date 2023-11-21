@@ -4,6 +4,7 @@ import asyncHandler from 'express-async-handler'
 import { postModel } from '../db/models/postModel.js'
 import { checkToken } from "../middlewares/checkToken.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
+import { object } from "webidl-conversions";
 
 
 //마이페이지 - 게시글 가져오기
@@ -16,8 +17,10 @@ postRouter.get('/:nickname',  asyncHandler(async (req, res, next) => {  //checkT
 
 
 //게시글 가져오기
-postRouter.get('/:postId', asyncHandler(async (req, res, next) => {  
+//_id = object(_id)
 
+postRouter.get('/detail/:postId', asyncHandler(async (req, res, next) => {  
+    
     const findedPost
         = await postModel.findPost(req.params.postId)
 
@@ -26,7 +29,7 @@ postRouter.get('/:postId', asyncHandler(async (req, res, next) => {
 
 
 //전체 게시글 보기
-postRouter.get('/', asyncHandler(async (req, res, next) => {  // isAdmin,
+postRouter.get('/', asyncHandler(async (req, res, next) => {  
 
     const findedAllPost
         = await postModel.findAllPost()

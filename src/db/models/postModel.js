@@ -1,6 +1,5 @@
 import { PostSchema } from "../schemas/postSchema.js";
 import { errGenerator } from "../../../errGenerator.js";
-
 import mongoose from "mongoose";
 
 const Post = mongoose.model("post",PostSchema);
@@ -9,13 +8,12 @@ const ObjectId = mongoose.Types.ObjectId;
 class PostModel{
     /* 새 게시글 생성 */
     async createPost(postInfo){
-        console.log(postInfo)
+        
         const createdPost = await Post.create(postInfo)
         
         return createdPost;
     }
 
-    
     /* 게시글 삭제
     게시글 id*/
     async removePost(data){
@@ -30,7 +28,7 @@ class PostModel{
     async updatePost(postId,data){
      
         const updatedPost
-         = await Post.findOneAndUpdate({_id:postId},data)
+         = await Post.findByIdAndUpdate(new ObjectId(postId),data)
 
         return updatedPost;
     }
@@ -52,7 +50,8 @@ class PostModel{
 
     /* 게시글 보기 (id)*/
     async findPost(data){
-        const findedAllPost = await Post.findOne({postId:data})
+        
+        const findedAllPost = await Post.findById(new ObjectId(data))
 
         return findedAllPost;
     }
@@ -61,5 +60,3 @@ class PostModel{
 
 const postModel = new PostModel();
 export {postModel};
-
-
