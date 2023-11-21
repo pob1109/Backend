@@ -2,6 +2,7 @@ import { CommentSchema } from "../schemas/comment-schema.js";
 import mongoose from "mongoose";
 
 const Comment = mongoose.model("comment",CommentSchema);
+const ObjectId = mongoose.Types.ObjectId;
 
 class CommentModel{
     /* 새 코멘트 생성

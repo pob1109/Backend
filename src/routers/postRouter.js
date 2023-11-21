@@ -19,13 +19,13 @@ postRouter.get('/:nickname',  asyncHandler(async (req, res, next) => {  //checkT
 postRouter.get('/:postId', asyncHandler(async (req, res, next) => {  
 
     const findedPost
-        = await postModel.findPost(req.body.postId)
+        = await postModel.findPost(req.params.postId)
 
     res.status(200).send(findedPost);
 }))
 
 
-//관리자페이지 - 게시글 보기
+//전체 게시글 보기
 postRouter.get('/', asyncHandler(async (req, res, next) => {  // isAdmin,
 
     const findedAllPost
@@ -37,18 +37,7 @@ postRouter.get('/', asyncHandler(async (req, res, next) => {  // isAdmin,
 
 //게시글 작성
 postRouter.post('/', asyncHandler(async (req, res, next) => { //checkToken, 
-    const newPost = {
-        board_category: req.body.board_category,
-        product_category: req.body.product_category,
-        event_date: req.body.event_date,
-        event_location: req.body.event_location,
-        nickname: req.body.nickname,
-        title: req.body.title ,
-        content: req.body.content,
-        picture: req.body.picture,
-        isFound: req.body.isFound,
-    }
-    console.log(req.body)
+    const newPost = req.body
     const createdNewPost
         = await postModel.createPost(newPost)
 
@@ -59,20 +48,10 @@ postRouter.post('/', asyncHandler(async (req, res, next) => { //checkToken,
 //게시글 수정하기
 postRouter.put('/:postId', asyncHandler(async (req, res, next) => { //checkToken, 
 
-    const post = {
-        board_category: req.body.board_category,
-        product_category: req.body.product_category,
-        event_date: req.body.event_date,
-        event_location: req.body.event_location,
-        nickname: req.body.nickname,
-        title: req.body.title ,
-        content: req.body.content,
-        picture: req.body.picture,
-        isFound: req.body.isFound,
-        postId:req.body.postId
-    }
+    const post = req.body;
+    const postId=req.params.postId
     const changedPost
-        = await postModel.updateComment(post)
+        = await postModel.updatePost(postId,post)
 
     res.status(200).send(changedPost)
 }))
@@ -80,9 +59,8 @@ postRouter.put('/:postId', asyncHandler(async (req, res, next) => { //checkToken
 
 // 게시글 삭제하기
 postRouter.delete('/:postId', asyncHandler(async (req, res, next) => { //checkToken, isAdmin, 
-    console.log(req.body)
     const deleted
-        = await postModel.removePost(req.body.postId);
+        = await postModel.removePost(req.params.postId);
 
     res.status(200).json(deleted);
 }))
