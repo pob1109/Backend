@@ -36,7 +36,7 @@ postRouter.get('/', asyncHandler(async (req, res, next) => {  // isAdmin,
 
 
 //게시글 작성
-postRouter.post('/post', asyncHandler(async (req, res, next) => { //checkToken, 
+postRouter.post('/', asyncHandler(async (req, res, next) => { //checkToken, 
     const newPost = {
         board_category: req.body.board_category,
         product_category: req.body.product_category,
@@ -69,6 +69,7 @@ postRouter.put('/:postId', asyncHandler(async (req, res, next) => { //checkToken
         content: req.body.content,
         picture: req.body.picture,
         isFound: req.body.isFound,
+        postId:req.params.postId
     }
     const changedPost
         = await postModel.updateComment(post)
