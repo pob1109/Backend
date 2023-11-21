@@ -19,7 +19,7 @@ commentRouter.get('/:nickname',  asyncHandler(async (req, res, next) => {  // ch
 commentRouter.get('/:postId', asyncHandler(async (req, res, next) => {
 
     const findedPostComment
-        = await commentModel.findPostComment(req.params.postId)
+        = await commentModel.findPostComment(req.body.postId)
 
     res.status(200).send(findedPostComment);
 }))
@@ -40,7 +40,7 @@ commentRouter.post('/:postId', asyncHandler(async (req, res, next) => { // check
     const newComment = {
         nickname: req.body.nickname,
         content: req.body.content,
-        postId: req.params.postId,
+        postId: req.body.postId,
     }
     console.log(req.body)
     const createdNewComment
@@ -56,7 +56,7 @@ commentRouter.put('/:commentId',  asyncHandler(async (req, res, next) => {//chec
     const comment = {
         nickname: req.body.nickname,
         updateContent: req.body.content,
-        postId: req.params.postId,
+        postId: req.body.postId,
     }
     const changedComment
         = await commentModel.updateComment(comment)

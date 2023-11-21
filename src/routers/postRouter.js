@@ -19,7 +19,7 @@ postRouter.get('/:nickname',  asyncHandler(async (req, res, next) => {  //checkT
 postRouter.get('/:postId', asyncHandler(async (req, res, next) => {  
 
     const findedPost
-        = await postModel.findPost(req.params.postId)
+        = await postModel.findPost(req.body.postId)
 
     res.status(200).send(findedPost);
 }))
@@ -69,7 +69,7 @@ postRouter.put('/:postId', asyncHandler(async (req, res, next) => { //checkToken
         content: req.body.content,
         picture: req.body.picture,
         isFound: req.body.isFound,
-        postId:req.params.postId
+        postId:req.body.postId
     }
     const changedPost
         = await postModel.updateComment(post)
@@ -80,9 +80,9 @@ postRouter.put('/:postId', asyncHandler(async (req, res, next) => { //checkToken
 
 // 게시글 삭제하기
 postRouter.delete('/:postId', asyncHandler(async (req, res, next) => { //checkToken, isAdmin, 
-
+    console.log(req.body)
     const deleted
-        = await postModel.removePost(req.params.postId);
+        = await postModel.removePost(req.body.postId);
 
     res.status(200).json(deleted);
 }))

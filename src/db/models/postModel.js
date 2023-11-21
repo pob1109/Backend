@@ -15,10 +15,10 @@ class PostModel{
     /* 게시글 삭제
     게시글 id*/
     async removePost(data){
-        const removedPost = await Post.delete({postId:data})
+        const removedPost = await Post.findOneAndDelete({postId : data})
         // mongoDB에서 id를 어떤 이름으로 지정하는지 확인
 
-        return { result : deleted };
+        return { result : "deleted" };
     }
 
     /* 게시글 변경

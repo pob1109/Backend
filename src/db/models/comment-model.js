@@ -6,8 +6,8 @@ const Comment = mongoose.model("comment",CommentSchema);
 class CommentModel{
     /* 새 코멘트 생성
     { 사용자 닉네임, 내용(콘텐트), 게시글id } */
-    async createComment(commentInfo){
-        const createdComment = await Comment.create(commentInfo)
+    async createComment(newComment){
+        const createdComment = await Comment.create(newComment)
         
         return createdComment;
     }
