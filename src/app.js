@@ -7,7 +7,7 @@ import cors from "cors";
 const app = express();
 
 app.use(cors({
-    origin: true,
+    origin: ["http://localhost:3000","http://kdt-sw-6-team10.elicecoding.com"],
     credentials: true,
   }));
 app.use(express.json());
@@ -24,3 +24,4 @@ app.use((err,req,res,next)=>{
     res.status(err.status || 500).send(err.message)
 })
 export {app};
+g
