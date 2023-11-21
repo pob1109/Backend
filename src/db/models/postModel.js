@@ -1,4 +1,5 @@
 import { PostSchema } from "../schemas/postSchema.js";
+import { errGenerator } from "../../../errGenerator.js";
 import mongoose from "mongoose";
 
 const Post = mongoose.model("post",PostSchema);
@@ -23,10 +24,10 @@ class PostModel{
 
     /* 게시글 변경
      업데이트할 게시글 내용, object화 id*/
-    async updatePost(data){
-     
+    async updatePost(post,postId){
+        
         const updatedPost
-         = await Comment.findOneAndUpdate({postId:postId},post)
+         = await Post.findOneAndUpdate({postId:postId},post)
 
         return updatedPost;
     }

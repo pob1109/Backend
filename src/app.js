@@ -2,7 +2,7 @@ import express from "express";
 import { userRouter } from "./routers/userRouter.js";
 import {postRouter} from "./routers/postRouter.js"
 import {commentRouter} from "./routers/comment-router.js";
-//import cookieParser from "cookie-parser";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 
 
@@ -13,7 +13,7 @@ app.use(cors({
     credentials: true,
   }));
 app.use(express.json());
-//app.use(cookieParser());
+app.use(cookieParser());
 
 app.use('/api/user',userRouter)
 
