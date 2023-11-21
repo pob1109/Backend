@@ -88,7 +88,7 @@ postRouter.put('/:postId', asyncHandler(async (req, res, next) => { //checkToken
 postRouter.delete('/:postId', asyncHandler(async (req, res, next) => { //checkToken, isAdmin, 
     console.log(req.body)
     const deleted
-        = await postModel.removePost(req.body.postId);
+        = await postModel.removePost(req.params.postId);
 
     res.status(200).json(deleted);
 }))
