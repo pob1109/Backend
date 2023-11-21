@@ -23,9 +23,9 @@ class CommentModel{
 
     /* 코멘트 변경
     코멘트 id, 업데이트할 내용(콘텐트)*/
-    async updateComment({nickname, updateContent, postId}){
+    async updateComment({nickname, updateContent, commentId}){
         const updatedComment
-         = await Comment.findOneAndUpdate({postId : postId},{nickname : nickname, content : updateContent})
+         = await Comment.findOneAndUpdate({commentId : commentId},{nickname : nickname, content : updateContent})
 
         return updatedComment;
     }

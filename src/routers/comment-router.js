@@ -57,6 +57,7 @@ commentRouter.put('/:commentId',  asyncHandler(async (req, res, next) => {//chec
         nickname: req.body.nickname,
         updateContent: req.body.content,
         postId: req.body.postId,
+        commentId: req.body.commentId,
     }
     const changedComment
         = await commentModel.updateComment(comment)
