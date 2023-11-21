@@ -1,4 +1,6 @@
+
 import { PostSchema } from "../schemas/postSchema.js";
+import { errGenerator } from "../../../errGenerator";
 import mongoose from "mongoose";
 
 const Post = mongoose.model("post",PostSchema);
@@ -12,6 +14,7 @@ class PostModel{
         return createdPost;
     }
 
+    
     /* 게시글 삭제
     게시글 id*/
     async removePost(data){
