@@ -27,9 +27,10 @@ commentRouter.get('/post/:postId', asyncHandler(async (req, res, next) => {
 
 //관리자페이지 - 전체 댓글 보기
 commentRouter.get('/', asyncHandler(async (req, res, next) => {   //isAdmin,
+    const {page,pageSize}=req.query;
 
     const findedAllComment
-        = await commentModel.findAllComment()
+        = await commentModel.findAllComment(page,pageSize)
 
     res.status(200).send(findedAllComment);
 }))

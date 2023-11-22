@@ -41,16 +41,18 @@ class CommentModel{
 
     /* 모든 코멘트 보기 (관리자)
     사용자 닉네임*/
-    async findAllComment(){
-        const findedAllComment = await Comment.find({})
+    async findAllComment(page,pageSize){
 
+        const MaxPost = Number(pageSize)
+        const hidePost = (Number(page)-1)*MaxPost
+        const findedAllComment = await Comment.find({}).skip(hidePost).limit(MaxPost);
+        
         return findedAllComment;
     }
 
     /* 글에서 코멘트 보기
     게시글id */
     async findPostComment(data){
-    
         const findedPostComment = await Comment.find({postId:data})
 
         return findedPostComment;
