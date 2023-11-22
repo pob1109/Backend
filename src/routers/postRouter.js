@@ -70,7 +70,7 @@ postRouter.delete('/:postId', asyncHandler(async (req, res, next) => { //checkTo
 }))
 
 //검색기능 테스트
-postRouter.get('/', asyncHandler(async (req, res, next) => {  
+postRouter.get('/search', asyncHandler(async (req, res, next) => {  
     const data = req.query;
     console.log(data)
     const searchResult = await postModel.searchPost(data);

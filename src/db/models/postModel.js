@@ -62,7 +62,7 @@ class PostModel{
     /* 게시글 검색 -> 반환값이 무조건 빈배열 */
     async searchPost(data){
         const { word, board_category, product_category, event_date, event_location } = data;
-        const filter = {};
+        //const filter = [];
         if(word){
             filter.title = word;
         }
