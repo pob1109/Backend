@@ -62,9 +62,20 @@ class PostModel{
     /* 게시글 검색 -> 반환값이 무조건 빈배열 */
     async searchPost(data){
         const { word, board_category, product_category, event_date, event_location } = data;
-        //const filter = [];
+        const filter = {};
+        console.log(word)
         if(word){
             filter.title = word;
+            /*
+            for문?
+
+            if(filter.title.includes(word)){
+
+            }
+            if(filter.content.includes(word)){
+
+            }
+            */
         }
         if(board_category){
             filter.board_category = board_category;
@@ -78,7 +89,7 @@ class PostModel{
         if(event_location){
             filter.event_location = event_location;
         }
-        
+        console.log(filter)
         const searchResult = await Post.find(filter)
 
         return searchResult;
