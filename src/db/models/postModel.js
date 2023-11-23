@@ -65,26 +65,19 @@ class PostModel{
         const filter = {};
         console.log(word)
         if(word){
-            filter.title = word;
-            /*
-            for문?
+            filter.title = { $regex: word, $options: 'i'}
 
-            if(filter.title.includes(word)){
-
-            }
-            if(filter.content.includes(word)){
-
-            }
-            */
-        }
+            
+            filter.context = { $regex: word, $options: 'i'};
+        }    
         if(board_category){
-            filter.board_category = board_category;
+            filter.board_category = board_category
         }
         if(product_category){
-            filter.product_category = product_category;
+            filter.product_category = product_category
         }
         if(event_date){
-            filter.event_date = event_date;
+            filter.event_date = event_date
         }
         if(event_location){
             filter.event_location = event_location;
@@ -94,8 +87,7 @@ class PostModel{
 
         return searchResult;
     }
-
 }
 
 const postModel = new PostModel();
-export {postModel};
+export { postModel };

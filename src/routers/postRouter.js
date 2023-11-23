@@ -74,7 +74,7 @@ postRouter.get('/post/search', asyncHandler(async (req, res, next) => {
     // 경로를 왜 'post/search'로 해야하는지 모르겠음
 
     const data = req.query;
-    console.log(data)   // 콘솔이 찍히지도 않음
+    console.log(data)
     const searchResult = await postModel.searchPost(data);
 
     res.status(200).send(searchResult);
