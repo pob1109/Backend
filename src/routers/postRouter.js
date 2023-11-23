@@ -4,11 +4,26 @@ import asyncHandler from 'express-async-handler'
 import { postModel } from '../db/models/postModel.js'
 import { checkToken } from "../middlewares/checkToken.js";
 import { isAdmin } from "../middlewares/isAdmin.js";
-import { object } from "webidl-conversions";
+
+import multer from "multer";
+
+const storage = multer.diskStorage({
+  destination:function(req,file,cb){
+    cb(null,process.env.storagePath);
+  },
+  filename:function(req,file,cb){
+    const filename=
+      new Date().getTime().toString().slice(0,8)+"-"+file.originalname;
+    req.filename=filename;
+    cb(null,filename);
+  }
+});
+
+const upload = multer({storage})
 
 
 //마이페이지 - 게시글 가져오기
-postRouter.get('/:nickname',  asyncHandler(async (req, res, next) => {  //checkToken,
+postRouter.get('/:nickname',asyncHandler(async (req, res, next) => {  //checkToken,
     const findedPost
         = await postModel.findMyPost(req.params.nickname)
 
@@ -40,17 +55,19 @@ postRouter.get('/', asyncHandler(async (req, res, next) => {
 
 
 //게시글 작성
-postRouter.post('/', asyncHandler(async (req, res, next) => { //checkToken, 
-    const newPost = req.body
-    const createdNewPost
-        = await postModel.createPost(newPost)
+postRouter.post('/',upload.single('picture'),asyncHandler(async (req, res, next) => { //checkToken, 
+    let newPost = req.body 
+    const picture="/storage/"+req.file.filename
+    console.log(picture)
+    newPost.picture=picture
+    const createdNewPost= await postModel.createPost(newPost)
 
     res.status(200).send(createdNewPost);
 }))
 
 
 //게시글 수정하기
-postRouter.put('/:postId', asyncHandler(async (req, res, next) => { //checkToken, 
+postRouter.put('/:postId',asyncHandler(async (req, res, next) => { //checkToken, sameUser
 
     const post = req.body;
     const postId=req.params.postId
@@ -62,7 +79,7 @@ postRouter.put('/:postId', asyncHandler(async (req, res, next) => { //checkToken
 
 
 // 게시글 삭제하기
-postRouter.delete('/:postId', asyncHandler(async (req, res, next) => { //checkToken, isAdmin, 
+postRouter.delete('/:postId',asyncHandler(async (req, res, next) => { //checkToken ,sameUser
     const deleted
         = await postModel.removePost(req.params.postId);
 
@@ -71,7 +88,6 @@ postRouter.delete('/:postId', asyncHandler(async (req, res, next) => { //checkTo
 
 //검색기능 테스트
 postRouter.get('/post/search', asyncHandler(async (req, res, next) => {  
-    // 경로를 왜 'post/search'로 해야하는지 모르겠음
 
     const data = req.query;
     console.log(data)

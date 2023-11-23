@@ -2,7 +2,7 @@ import { PostSchema } from "../schemas/postSchema.js";
 //import { errGenerator } from "../../../errGenerator.js";
 import mongoose from "mongoose";
 
-const Post = mongoose.model("post",PostSchema);
+export const Post = mongoose.model("Post",PostSchema);
 const ObjectId = mongoose.Types.ObjectId;
 
 class PostModel{
@@ -36,8 +36,10 @@ class PostModel{
 
     /* 게시글 보기 (마이페이지)
     사용자 닉네임*/
-    async findMyPost(nickname){
-        const findedMyPost = await Post.find({nickname : nickname})
+    async findMyPost(page,pageSize){
+        const MaxPost = Number(pageSize)
+        const hidePost = (Number(page)-1)*MaxPost
+        const findedMyPost = await Post.find({nickname : nickname}).skip(hidePost).limit(MaxPost);
 
         return findedMyPost;
     }
@@ -63,12 +65,12 @@ class PostModel{
     async searchPost(data){
         const { word, board_category, product_category, event_date, event_location } = data;
         const filter = {};
-        console.log(word)
         if(word){
-            filter.title = { $regex: word, $options: 'i'}
-
-            
-            filter.context = { $regex: word, $options: 'i'};
+            // filter.$or = [
+            //     { title: { $regex: word, $options: 'i' } },
+            //     { context: { $regex: word, $options: 'i' } }
+            // ]
+            filter.title = word
         }    
         if(board_category){
             filter.board_category = board_category
