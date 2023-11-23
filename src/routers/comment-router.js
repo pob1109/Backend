@@ -8,15 +8,16 @@ import { isAdmin } from "../middlewares/isAdmin.js";
 
 //마이페이지 - 작성한 댓글 가져오기
 commentRouter.get('/:nickname',asyncHandler(async (req, res, next) => {  // checkToken,
+    const {page,pageSize}=req.query;
     const findedComment
-        = await commentModel.findMyComment(req.params.nickname)
+        = await commentModel.findMyComment(page,pageSize,req.params.nickname)
 
     res.status(200).send(findedComment);
 }))
 
 
 //게시글 - 댓글 가져오기
-commentRouter.get('/post/:postId', asyncHandler(async (req, res, next) => {
+commentRouter.get('/detail/:postId', asyncHandler(async (req, res, next) => {
 
     const findedComment
         = await commentModel.findPostComment(req.params.postId)
