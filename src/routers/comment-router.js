@@ -37,6 +37,23 @@ commentRouter.get('/',isAdmin, asyncHandler(async (req, res, next) => {   //isAd
     res.status(200).send(findedAllComment);
 }))
 
+// 관리자&마이페이지 통합
+// commentRouter.get('/',isAdmin, asyncHandler(async (req, res, next) => {   //isAdmin,
+//     const {page,pageSize}=req.query;
+//     if(req.user.status == 1){
+//         const findedAllComment
+//         = await commentModel.findAllComment(page,pageSize,req.params.nickname)
+
+//         res.status(200).send(findedAllComment);
+//     }
+//     if(req.user.status == 0){
+//         const findedAllComment
+//         = await commentModel.findAllComment(page,pageSize)
+
+//         res.status(200).send(findedAllComment);
+//     }
+// }))
+
 
 //댓글 달기
 commentRouter.post('/:postId',checkToken,asyncHandler(async (req, res, next) => { // checkToken,
