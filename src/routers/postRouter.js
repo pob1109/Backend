@@ -24,8 +24,9 @@ const upload = multer({storage})
 
 //마이페이지 - 게시글 가져오기
 postRouter.get('/:nickname',asyncHandler(async (req, res, next) => {  //checkToken,
+    const {page,pageSize}=req.query;
     const findedPost
-        = await postModel.findMyPost(req.params.nickname)
+        = await postModel.findMyPost(page,pageSize,req.params.nickname)
 
     res.status(200).send(findedPost);
 }))
@@ -69,10 +70,10 @@ postRouter.post('/',upload.single('picture'),asyncHandler(async (req, res, next)
 //게시글 수정하기
 postRouter.put('/:postId',asyncHandler(async (req, res, next) => { //checkToken, sameUser
 
-    const post = req.body;
+    const data = req.body;
     const postId=req.params.postId
     const changedPost
-        = await postModel.updatePost(postId,post)
+        = await postModel.updatePost(postId,data)
 
     res.status(200).send(changedPost)
 }))
@@ -87,7 +88,7 @@ postRouter.delete('/:postId',asyncHandler(async (req, res, next) => { //checkTok
 }))
 
 //검색기능 테스트
-postRouter.get('/post/search', asyncHandler(async (req, res, next) => {  
+postRouter.get('/', asyncHandler(async (req, res, next) => {  
 
     const data = req.query;
     console.log(data)

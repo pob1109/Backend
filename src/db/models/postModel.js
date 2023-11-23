@@ -29,17 +29,17 @@ class PostModel{
      업데이트할 게시글 내용, object화 id*/
     async updatePost(postId,data){
         const updatedPost
-         = await Post.findByIdAndUpdate(new ObjectId(postId),data)
+         = await Post.findByIdAndUpdate(new ObjectId(postId),data,{new:true})
 
         return updatedPost;
     }
 
     /* 게시글 보기 (마이페이지)
     사용자 닉네임*/
-    async findMyPost(page,pageSize){
+    async findMyPost(page, pageSize, data){
         const MaxPost = Number(pageSize)
         const hidePost = (Number(page)-1)*MaxPost
-        const findedMyPost = await Post.find({nickname : nickname}).skip(hidePost).limit(MaxPost);
+        const findedMyPost = await Post.find({nickname : data}).skip(hidePost).limit(MaxPost);
 
         return findedMyPost;
     }
@@ -63,14 +63,14 @@ class PostModel{
 
     /* 게시글 검색 -> 반환값이 무조건 빈배열 */
     async searchPost(data){
-        const { word, board_category, product_category, event_date, event_location } = data;
+        const { word, board_category, product_category, event_date, event_location, page, pageSize } = data;
         const filter = {};
         if(word){
-            // filter.$or = [
-            //     { title: { $regex: word, $options: 'i' } },
-            //     { context: { $regex: word, $options: 'i' } }
-            // ]
-            filter.title = word
+             filter.$or = [
+                 { title: { $regex: word, $options: 'i' } },
+                 { context: { $regex: word, $options: 'i' } }
+             ]
+            //filter.title = word
         }    
         if(board_category){
             filter.board_category = board_category
@@ -85,7 +85,11 @@ class PostModel{
             filter.event_location = event_location;
         }
         console.log(filter)
-        const searchResult = await Post.find(filter)
+
+        const MaxPost = Number(pageSize)
+        const hidePost = (Number(page)-1)*MaxPost
+
+        const searchResult = await Post.find(filter).skip(hidePost).limit(MaxPost);
 
         return searchResult;
     }
