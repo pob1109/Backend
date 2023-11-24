@@ -22,10 +22,11 @@ const upload = multer({storage})
 
 
 //관리자&마이페이지 - 게시글 가져오기
-postRouter.get('/:nickname',asyncHandler(async (req, res, next) => {  //checkToken,
-    const {page,pageSize}=req.query;
+postRouter.get('/page',checkToken,asyncHandler(async (req, res, next) => {  //
+    const userData=req.user
+    //const {page,pageSize}=req.query;
     const findedPost
-        = await postModel.findMyPost(page,pageSize,req.params.nickname)
+        = await postModel.findMyPost(userData)
 
     res.status(200).send(findedPost);
 }))
@@ -55,8 +56,9 @@ postRouter.get('/', asyncHandler(async (req, res, next) => {
 
 
 //게시글 작성
-postRouter.post('/',upload.single('picture'),asyncHandler(async (req, res, next) => { //checkToken, 
+postRouter.post('/',checkToken,upload.single('picture'),asyncHandler(async (req, res, next) => { // 
     let newPost = req.body
+    newPost.nickname = req.user.nickname;
     let picture = ""
 
     if(req.file){
@@ -71,7 +73,7 @@ postRouter.post('/',upload.single('picture'),asyncHandler(async (req, res, next)
 
 
 //게시글 수정하기
-postRouter.put('/:postId',upload.single('picture'),asyncHandler(async (req, res, next) => { //checkToken, sameUser
+postRouter.put('/:postId',checkToken, sameUser,upload.single('picture'),asyncHandler(async (req, res, next) => { //
     let newPost = req.body
     let picture = ""
     const postId=req.params.postId
@@ -90,22 +92,11 @@ postRouter.put('/:postId',upload.single('picture'),asyncHandler(async (req, res,
 
 
 // 게시글 삭제하기
-postRouter.delete('/:postId',asyncHandler(async (req, res, next) => { //checkToken ,sameUser
+postRouter.delete('/:postId',checkToken ,sameUser,asyncHandler(async (req, res, next) => { //
     const deleted
         = await postModel.removePost(req.params.postId);
 
     res.status(200).json(deleted);
 }))
-
-//검색기능 테스트
-/*postRouter.get('/search', asyncHandler(async (req, res, next) => {  
-    const data = req.query;
-    console.log(data)
-
-    const searchResult = await postModel.searchPost(data);
-
-    res.status(200).send(searchResult);
-}))*/
-
 
 export { postRouter };

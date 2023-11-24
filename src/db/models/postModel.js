@@ -34,25 +34,23 @@ class PostModel{
         return updatedPost;
     }
 
-    /* 게시글 보기 (마이페이지)
+    /* 게시글 보기 (관리자&마이페이지)
     사용자 닉네임*/
-    async findMyPost(page, pageSize, data){
-        const MaxPost = Number(pageSize)
-        const hidePost = (Number(page)-1)*MaxPost
-        const findedMyPost = await Post.find({nickname : data}).skip(hidePost).limit(MaxPost);
+    async findMyPost(data){
+
+        let filter={}
+        if(data.status===1){ 
+            filter.nickname=data.status.nickname
+        }
+
+        ///const MaxPost = Number(pageSize)
+        //const hidePost = (Number(page)-1)*MaxPost
+        const findedMyPost = await Post.find(filter)
+        //.skip(hidePost).limit(MaxPost);
 
         return findedMyPost;
     }
 
-    /* 모든 게시글 보기 (관리자)*/
-    /*async findAllPost(page,pageSize){
-
-        const MaxPost = Number(pageSize)
-        const hidePost = (Number(page)-1)*MaxPost
-        const findedAllPost = await Post.find({}).skip(hidePost).limit(MaxPost);
-
-        return findedAllPost;
-    }*/
 
     /* 게시글 보기 (id)*/
     async findPost(data){
@@ -63,7 +61,7 @@ class PostModel{
 
     /* 게시글 검색 -> 반환값이 무조건 빈배열 */
     async searchPost(data){
-        const { word, board_category, product_category, event_date, event_location, page, pageSize } = data;
+        const { word, board_category, product_category, event_date, event_location} = data;
         console.log(data)
         let filter = {};
         if(word){

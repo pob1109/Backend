@@ -31,26 +31,23 @@ class CommentModel{
         return updatedComment;
     }
 
-    /* 코멘트 보기 (마이페이지)
+    /* 코멘트 보기 (관리자&마이페이지)
     사용자 닉네임*/
-    async findMyComment(page,pageSize,data){
-        const MaxPost = Number(pageSize)
-        const hidePost = (Number(page)-1)*MaxPost
-        const findedMyComment = await Comment.find({nickname : data}).skip(hidePost).limit(MaxPost).populate('postId');
+    async findMyComment(data){
+
+        let filter={}
+        if(data.status===1){
+            filter.nickname=data.status.nickname
+        }
+
+        //const MaxPost = Number(pageSize)
+        //const hidePost = (Number(page)-1)*MaxPost
+        const findedMyComment = await Comment.find(filter)
+        //.skip(hidePost).limit(MaxPost).populate('postId');
 
         return findedMyComment;
     }
 
-    /* 모든 코멘트 보기 (관리자)
-    사용자 닉네임*/
-
-    async findAllComment(page,pageSize){
-        const MaxPost = Number(pageSize)
-        const hidePost = (Number(page)-1)*MaxPost
-        const findedAllComment = await Comment.find({}).skip(hidePost).limit(MaxPost).populate('postId');
-        
-        return findedAllComment;
-    }
 
     /* 글에서 코멘트 보기
     게시글id */
