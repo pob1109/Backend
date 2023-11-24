@@ -28,7 +28,17 @@ class CommentModel{
         }catch(e){
             throw err;
         }
-        
+    }
+
+    /*게시글 삭제 시 
+    포스트 id*/
+    async removeAllComment(data){
+        try{
+            await Comment.deleteMany({postId : new ObjectId(data)});
+
+        }catch(e){
+            throw err;
+        }
     }
 
     /* 코멘트 수정
@@ -49,9 +59,9 @@ class CommentModel{
     사용자 닉네임*/
     async findMyComment(page,pageSize,data){
         try{
-            const MaxPost = Number(pageSize)
-            const hidePost = (Number(page)-1)*MaxPost
-            const findedMyComment = await Comment.find({nickname : data}).skip(hidePost).limit(MaxPost).populate('postId');
+            //const MaxPost = Number(pageSize)
+            //const hidePost = (Number(page)-1)*MaxPost
+            const findedMyComment = await Comment.find({nickname : data}).populate('postId')//.skip(hidePost).limit(MaxPost);
 
             return findedMyComment;
         }catch(e){
@@ -65,9 +75,9 @@ class CommentModel{
 
     async findAllComment(page,pageSize){
         try{
-            const MaxPost = Number(pageSize)
-            const hidePost = (Number(page)-1)*MaxPost
-            const findedAllComment = await Comment.find({}).skip(hidePost).limit(MaxPost).populate('postId');
+            //const MaxPost = Number(pageSize)
+            //const hidePost = (Number(page)-1)*MaxPost
+            const findedAllComment = await Comment.find({}).populate('postId');//.skip(hidePost).limit(MaxPost)
         
             return findedAllComment;
         }catch(e){

@@ -51,11 +51,11 @@ class PostModel{
 
     /* 게시글 보기 (마이페이지)
     사용자 닉네임*/
-    async findMyPost(page, pageSize, data){
+    async findMyPost(data){
         try{
-            const MaxPost = Number(pageSize)
-            const hidePost = (Number(page)-1)*MaxPost
-            const findedMyPost = await Post.find({nickname : data}).skip(hidePost).limit(MaxPost);
+            //const MaxPost = Number(pageSize)
+            //const hidePost = (Number(page)-1)*MaxPost
+            const findedMyPost = await Post.find({nickname : data})//.skip(hidePost).limit(MaxPost);
 
             return findedMyPost;
         }catch(e){
@@ -65,11 +65,11 @@ class PostModel{
     }
 
     /* 모든 게시글 보기 (관리자)*/
-    async findAllPost(page,pageSize){
+    async findAllPost(){
         try{
-            const MaxPost = Number(pageSize)
-            const hidePost = (Number(page)-1)*MaxPost
-            const findedAllPost = await Post.find({}).skip(hidePost).limit(MaxPost);
+            //const MaxPost = Number(pageSize)
+            //const hidePost = (Number(page)-1)*MaxPost
+            const findedAllPost = await Post.find({})//.skip(hidePost).limit(MaxPost);
 
             return findedAllPost;
         }catch(e){
@@ -94,7 +94,7 @@ class PostModel{
     /* 게시글 검색 -> 반환값이 무조건 빈배열 */
     async searchPost(data){
         try{
-            const { word, board_category, product_category, event_date, event_location, page, pageSize } = data;
+            const { word, board_category, product_category, event_date, event_location } = data;
             const filter = {};
             if(word){
                 filter.$or = [
@@ -117,10 +117,10 @@ class PostModel{
             }
             console.log(filter)
 
-            const MaxPost = Number(pageSize)
-            const hidePost = (Number(page)-1)*MaxPost
+            //const MaxPost = Number(pageSize)
+            //const hidePost = (Number(page)-1)*MaxPost
 
-            const searchResult = await Post.find(filter).skip(hidePost).limit(MaxPost);
+            const searchResult = await Post.find(filter)//.skip(hidePost).limit(MaxPost);
 
             return searchResult;
         }catch(e){

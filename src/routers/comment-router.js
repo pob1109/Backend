@@ -7,10 +7,10 @@ import { sameUser } from "../middlewares/sameUser.js";
 import {isAdmin} from "../middlewares/isAdmin.js"
 
 //마이페이지 - 작성한 댓글 가져오기
-commentRouter.get('/:nickname',checkToken,sameUser,asyncHandler(async (req, res, next) => {  // checkToken,
-    const {page,pageSize}=req.query;
+commentRouter.get('/:nickname',checkToken,asyncHandler(async (req, res, next) => {  // checkToken,
+    // const {page,pageSize}=req.query;
     const findedComment
-        = await commentModel.findMyComment(page,pageSize,req.params.nickname)
+        = await commentModel.findMyComment(req.params.nickname)
 
     res.status(200).send(findedComment);
 }))
@@ -29,10 +29,10 @@ commentRouter.get('/detail/:postId', asyncHandler(async (req, res, next) => {
 
 //관리자페이지 - 전체 댓글 보기
 commentRouter.get('/',isAdmin, asyncHandler(async (req, res, next) => {   //isAdmin,
-    const {page,pageSize}=req.query;
+    //const {page,pageSize}=req.query;
 
     const findedAllComment
-        = await commentModel.findAllComment(page,pageSize)
+        = await commentModel.findAllComment()
 
     res.status(200).send(findedAllComment);
 }))
@@ -92,6 +92,7 @@ commentRouter.delete('/:commentId',checkToken,sameUser,asyncHandler(async (req, 
 
     res.status(200).json(deleted);
 }))
+
 
 
 export { commentRouter };
