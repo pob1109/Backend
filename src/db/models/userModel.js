@@ -20,11 +20,13 @@ const transport = nodemailer.createTransport({
 })
 
 class UserModel{
-    async getUsers(page,pageSize){ //전체 유저를 현재page 기준으로 pageSize만큼만 전송
+    async getUsers(){ //전체 유저를 현재page 기준으로 pageSize만큼만 전송
         try{
-            const MaxPost = Number(pageSize)
-            const hidePost = (Number(page)-1)*MaxPost
-            const usersData = await User.find({}).skip(hidePost).limit(MaxPost);
+            //const MaxPost = Number(pageSize)
+            //const hidePost = (Number(page)-1)*MaxPost
+            const usersData = await User.find({})
+            
+            //.skip(hidePost).limit(MaxPost);
             return usersData;
         }catch(err){
             throw err
