@@ -45,12 +45,12 @@ postRouter.get('/detail/:postId', asyncHandler(async (req, res, next) => {
 
 //전체 게시글 보기
 postRouter.get('/', asyncHandler(async (req, res, next) => {  
-    const {page,pageSize}=req.query;
+    const data=req.query;
 
-    const findedAllPost
-        = await postModel.findAllPost(page,pageSize)
+    const findedPost
+        = await postModel.searchPost(data)
 
-    res.status(200).send(findedAllPost);
+    res.status(200).send(findedPost);
 }))
 
 
@@ -98,14 +98,14 @@ postRouter.delete('/:postId',asyncHandler(async (req, res, next) => { //checkTok
 }))
 
 //검색기능 테스트
-postRouter.get('/search', asyncHandler(async (req, res, next) => {  
+/*postRouter.get('/search', asyncHandler(async (req, res, next) => {  
     const data = req.query;
     console.log(data)
 
     const searchResult = await postModel.searchPost(data);
 
     res.status(200).send(searchResult);
-}))
+}))*/
 
 
 export { postRouter };

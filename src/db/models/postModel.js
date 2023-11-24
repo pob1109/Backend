@@ -45,14 +45,14 @@ class PostModel{
     }
 
     /* 모든 게시글 보기 (관리자)*/
-    async findAllPost(page,pageSize){
+    /*async findAllPost(page,pageSize){
 
         const MaxPost = Number(pageSize)
         const hidePost = (Number(page)-1)*MaxPost
         const findedAllPost = await Post.find({}).skip(hidePost).limit(MaxPost);
 
         return findedAllPost;
-    }
+    }*/
 
     /* 게시글 보기 (id)*/
     async findPost(data){
@@ -64,12 +64,14 @@ class PostModel{
     /* 게시글 검색 -> 반환값이 무조건 빈배열 */
     async searchPost(data){
         const { word, board_category, product_category, event_date, event_location, page, pageSize } = data;
-        const filter = {};
+        console.log(data)
+        let filter = {};
         if(word){
-             filter.$or = [
-                 { title: { $regex: word, $options: 'i' } },
-                 { context: { $regex: word, $options: 'i' } }
-             ]
+             filter={$or:[
+                {title:{ $regex: word, $options: 'i' }}, 
+                {content:{ $regex: word, $options: 'i' }}
+             ]}
+             
             //filter.title = word
         }    
         if(board_category){
@@ -86,10 +88,11 @@ class PostModel{
         }
         console.log(filter)
 
-        const MaxPost = Number(pageSize)
-        const hidePost = (Number(page)-1)*MaxPost
+        //const MaxPost = Number(pageSize)
+        //const hidePost = (Number(page)-1)*MaxPost
 
-        const searchResult = await Post.find(filter).skip(hidePost).limit(MaxPost);
+        const searchResult = await Post.find(filter)
+        //.skip(hidePost).limit(MaxPost);
 
         return searchResult;
     }
