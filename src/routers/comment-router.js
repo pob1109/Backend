@@ -4,6 +4,7 @@ import asyncHandler from 'express-async-handler'
 import { commentModel } from '../db/models/comment-model.js'
 import { checkToken } from "../middlewares/checkToken.js";
 import { sameUser } from "../middlewares/sameUser.js";
+import {isAdmin} from "../middlewares/isAdmin.js"
 
 //관리자&마이페이지 - 작성한 댓글 가져오기
 commentRouter.get('/',checkToken,asyncHandler(async (req, res, next) => {  // 
@@ -61,6 +62,7 @@ commentRouter.delete('/:commentId',checkToken,sameUser,asyncHandler(async (req, 
 
     res.status(200).json(deleted);
 }))
+
 
 
 export { commentRouter };

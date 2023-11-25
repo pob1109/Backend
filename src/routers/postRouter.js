@@ -2,8 +2,10 @@ import express from "express";
 const postRouter = express.Router();
 import asyncHandler from 'express-async-handler'
 import { postModel } from '../db/models/postModel.js'
+import { commentModel } from '../db/models/comment-model.js'
 import { checkToken } from "../middlewares/checkToken.js";
 import { sameUser } from "../middlewares/sameUser.js";
+import {isAdmin} from "../middlewares/isAdmin.js"
 import multer from "multer";
 
 const storage = multer.diskStorage({
@@ -30,6 +32,23 @@ postRouter.get('/page',checkToken,asyncHandler(async (req, res, next) => {  //
 
     res.status(200).send(findedPost);
 }))
+
+//관리자 & 마이페이지 통합
+// postRouter.get('/:nickname',checkToken,asyncHandler(async (req, res, next) => {  //checkToken, + isAdmin
+//     const {page,pageSize}=req.query;
+//     if(req.user.status == 1){
+//         const findedPost
+//         = await postModel.findMyPost(page,pageSize,req.params.nickname)
+
+//         res.status(200).send(findedPost);
+//     }
+//     if(req.user.status == 0){
+//         const findedPost
+//         = await postModel.findAllPost(page,pageSize)
+
+//         res.status(200).send(findedPost);
+//     }
+// }))
 
 
 //게시글 가져오기
@@ -95,6 +114,7 @@ postRouter.put('/:postId',checkToken, sameUser,upload.single('picture'),asyncHan
 postRouter.delete('/:postId',checkToken ,sameUser,asyncHandler(async (req, res, next) => { //
     const deleted
         = await postModel.removePost(req.params.postId);
+    await commentModel.removeAllComment({postId:req.params.postId});
 
     res.status(200).json(deleted);
 }))
