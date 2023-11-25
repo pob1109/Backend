@@ -33,27 +33,10 @@ postRouter.get('/page',checkToken,asyncHandler(async (req, res, next) => {  //
     res.status(200).send(findedPost);
 }))
 
-//관리자 & 마이페이지 통합
-// postRouter.get('/:nickname',checkToken,asyncHandler(async (req, res, next) => {  //checkToken, + isAdmin
-//     const {page,pageSize}=req.query;
-//     if(req.user.status == 1){
-//         const findedPost
-//         = await postModel.findMyPost(page,pageSize,req.params.nickname)
-
-//         res.status(200).send(findedPost);
-//     }
-//     if(req.user.status == 0){
-//         const findedPost
-//         = await postModel.findAllPost(page,pageSize)
-
-//         res.status(200).send(findedPost);
-//     }
-// }))
 
 
 //게시글 가져오기
 //_id = object(_id)
-
 postRouter.get('/detail/:postId', asyncHandler(async (req, res, next) => {  
     
     const findedPost
@@ -63,7 +46,7 @@ postRouter.get('/detail/:postId', asyncHandler(async (req, res, next) => {
 }))
 
 
-//전체 게시글 보기
+//전체 게시글 보기&검색기능
 postRouter.get('/', asyncHandler(async (req, res, next) => {  
     const data=req.query;
 

@@ -74,7 +74,7 @@ class CommentModel{
             throw err;
         }
         
-    }
+    
 
     /* 모든 코멘트 보기 (관리자)
     사용자 닉네임*/

@@ -52,7 +52,7 @@ class PostModel{
     /* 게시글 보기 (관리자&마이페이지)
     사용자 닉네임*/
     async findMyPost(data){
-
+        try{
         let filter={}
         if(data.status===1){ 
             filter.nickname=data.status.nickname
@@ -135,7 +135,7 @@ class PostModel{
         }
         
     }
-}
+
 
 const postModel = new PostModel();
 export { postModel };

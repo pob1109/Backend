@@ -45,13 +45,7 @@ class ChatModel {
 
     async readMessage(chatRoomId,lastTimestamp){
         try{
-            const filter ={
-                _id: new ObjectId(chatRoomId),
-                chat: {
-                    $elemMatch: { "timestamp": { $gt: lastTimestamp } }
-                  }
-            }
-            const sendedMessage = await Chat.find(filter)
+            const sendedMessage = await Chat.find(new ObjectId(chatRoomId))
             return sendedMessage;
         }catch(err){
             throw err;
