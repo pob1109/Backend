@@ -25,9 +25,9 @@ const upload = multer({storage})
 
 //관리자&마이페이지 - 게시글 가져오기
 postRouter.get('/:nickname',checkToken,asyncHandler(async (req, res, next) => {  //checkToken, + isAdmin
-    const {page,pageSize}=req.query;
+    //const {page,pageSize}=req.query;
     const findedPost
-        = await postModel.findMyPost(page,pageSize,req.params.nickname)
+        = await postModel.findMyPost(req.params.nickname)
 
     res.status(200).send(findedPost);
 }))
@@ -64,10 +64,10 @@ postRouter.get('/detail/:postId', asyncHandler(async (req, res, next) => {
 
 //전체 게시글 보기
 postRouter.get('/', asyncHandler(async (req, res, next) => {  
-    const {page,pageSize}=req.query;
+    //const {page,pageSize}=req.query;
 
     const findedAllPost
-        = await postModel.findAllPost(page,pageSize)
+        = await postModel.findAllPost()
 
     res.status(200).send(findedAllPost);
 }))
@@ -109,7 +109,7 @@ postRouter.put('/:postId',checkToken,sameUser,upload.single('picture'),asyncHand
 
 
 // 게시글 삭제하기
-postRouter.delete('/:postId',checkToken,sameUser,asyncHandler(async (req, res, next) => { //checkToken ,sameUser
+postRouter.delete('/:postId',asyncHandler(async (req, res, next) => { //checkToken ,sameUser
     const deleted
         = await postModel.removePost(req.params.postId);
     await commentModel.removeAllComment({postId:req.params.postId});

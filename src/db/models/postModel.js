@@ -23,8 +23,9 @@ class PostModel{
     async removePost(data){
         try{
             const removedPost = await Post.findByIdAndDelete(new ObjectId(data))
-
-            if(!removedPost){
+            const removedComment = await Comment.deleteMany({postId : new ObjectId(data)});
+            
+            if(!removedPost && !removedComment){
                 return { result : null }
             }
 
