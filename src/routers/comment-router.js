@@ -7,7 +7,7 @@ import { sameUser } from "../middlewares/sameUser.js";
 import {isAdmin} from "../middlewares/isAdmin.js"
 
 //마이페이지 - 작성한 댓글 가져오기
-commentRouter.get('/:nickname',checkToken,asyncHandler(async (req, res, next) => {  // checkToken,
+commentRouter.get('/:nickname',asyncHandler(async (req, res, next) => {  // checkToken,
     // const {page,pageSize}=req.query;
     const findedComment
         = await commentModel.findMyComment(req.params.nickname)
@@ -71,7 +71,7 @@ commentRouter.post('/:postId',asyncHandler(async (req, res, next) => { // checkT
 
 
 //댓글 수정하기
-commentRouter.put('/:commentId',checkToken,sameUser,asyncHandler(async (req, res, next) => {//checkToken,sameUser
+commentRouter.put('/:commentId',asyncHandler(async (req, res, next) => {//checkToken,sameUser
 
     const comment = {
         content: req.body.content,

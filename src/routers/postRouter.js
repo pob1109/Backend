@@ -24,7 +24,7 @@ const upload = multer({storage})
 
 
 //관리자&마이페이지 - 게시글 가져오기
-postRouter.get('/:nickname',checkToken,asyncHandler(async (req, res, next) => {  //checkToken, + isAdmin
+postRouter.get('/:nickname',asyncHandler(async (req, res, next) => {  //checkToken
     //const {page,pageSize}=req.query;
     const findedPost
         = await postModel.findMyPost(req.params.nickname)
@@ -64,10 +64,18 @@ postRouter.get('/detail/:postId', asyncHandler(async (req, res, next) => {
 
 //전체 게시글 보기
 postRouter.get('/', asyncHandler(async (req, res, next) => {  
+
     //const {page,pageSize}=req.query;
 
     const findedAllPost
         = await postModel.findAllPost()
+
+        
+    // const data=req.query;
+
+    // const findedPost
+    //     = await postModel.searchPost(data)
+
 
     res.status(200).send(findedAllPost);
 }))
@@ -90,7 +98,7 @@ postRouter.post('/',upload.single('picture'),asyncHandler(async (req, res, next)
 
 
 //게시글 수정하기
-postRouter.put('/:postId',checkToken,sameUser,upload.single('picture'),asyncHandler(async (req, res, next) => { //checkToken, sameUser
+postRouter.put('/:postId',upload.single('picture'),asyncHandler(async (req, res, next) => { //checkToken, sameUser
     let newPost = req.body
     let picture = ""
     const postId=req.params.postId
@@ -118,15 +126,14 @@ postRouter.delete('/:postId',asyncHandler(async (req, res, next) => { //checkTok
 }))
 
 //검색기능 테스트
-postRouter.get('/post/search', asyncHandler(async (req, res, next) => {  
-    console.log('test')
+/*postRouter.get('/search', asyncHandler(async (req, res, next) => {  
     const data = req.query;
     console.log(data)
 
     const searchResult = await postModel.searchPost(data);
 
     res.status(200).send(searchResult);
-}))
+}))*/
 
 
 export { postRouter };

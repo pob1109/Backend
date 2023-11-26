@@ -57,7 +57,7 @@ class CommentModel{
 
     /* 코멘트 보기 (마이페이지)
     사용자 닉네임*/
-    async findMyComment(page,pageSize,data){
+    async findMyComment(data){
         try{
             //const MaxPost = Number(pageSize)
             //const hidePost = (Number(page)-1)*MaxPost
@@ -73,7 +73,7 @@ class CommentModel{
     /* 모든 코멘트 보기 (관리자)
     사용자 닉네임*/
 
-    async findAllComment(page,pageSize){
+    async findAllComment(){
         try{
             //const MaxPost = Number(pageSize)
             //const hidePost = (Number(page)-1)*MaxPost
