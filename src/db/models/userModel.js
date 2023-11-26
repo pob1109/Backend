@@ -72,7 +72,7 @@ class UserModel{
             }           
             
             const newUser = {
-                email:email,
+                email:email, //바꾸면 안되잖아?
                 nickname:nickname,
                 password:hashedPassword,
             }

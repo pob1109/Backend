@@ -48,12 +48,20 @@ postRouter.get('/detail/:postId', asyncHandler(async (req, res, next) => {
 
 //전체 게시글 보기&검색기능
 postRouter.get('/', asyncHandler(async (req, res, next) => {  
-    const data=req.query;
 
-    const findedPost
-        = await postModel.searchPost(data)
+    //const {page,pageSize}=req.query;
 
-    res.status(200).send(findedPost);
+    const findedAllPost
+        = await postModel.findAllPost()
+
+        
+    // const data=req.query;
+
+    // const findedPost
+    //     = await postModel.searchPost(data)
+
+
+    res.status(200).send(findedAllPost);
 }))
 
 

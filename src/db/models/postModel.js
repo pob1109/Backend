@@ -1,8 +1,9 @@
 import { PostSchema } from "../schemas/postSchema.js";
 //import { errGenerator } from "../../../errGenerator.js";
 import mongoose from "mongoose";
-
+import { CommentSchema } from "../schemas/comment-schema.js";
 export const Post = mongoose.model("Post",PostSchema);
+export const Comment = mongoose.model("Comment",CommentSchema);
 const ObjectId = mongoose.Types.ObjectId;
 
 class PostModel{
@@ -13,7 +14,7 @@ class PostModel{
         
             return createdPost;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
@@ -23,14 +24,16 @@ class PostModel{
     async removePost(data){
         try{
             const removedPost = await Post.findByIdAndDelete(new ObjectId(data))
+            const removedComment = await Comment.deleteMany({postId : new ObjectId(data)});
+            
 
-            if(!removedPost){
+            if(!removedPost && removedComment == 0){
                 return { result : null }
             }
 
             return { result : "deleted" };
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
@@ -44,7 +47,7 @@ class PostModel{
 
             return updatedPost;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
@@ -65,24 +68,23 @@ class PostModel{
 
             return findedMyPost;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
 
     /* 모든 게시글 보기 (관리자)*/
+
     async findAllPost(){
         try{
             //const MaxPost = Number(pageSize)
             //const hidePost = (Number(page)-1)*MaxPost
             const findedAllPost = await Post.find({})//.skip(hidePost).limit(MaxPost);
-
             return findedAllPost;
         }catch(e){
-            throw err;
+            throw e;
         }
 
-        
     }
 
     /* 게시글 보기 (id)*/
@@ -92,7 +94,7 @@ class PostModel{
 
             return findedAllPost;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
@@ -131,7 +133,7 @@ class PostModel{
 
             return searchResult;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }

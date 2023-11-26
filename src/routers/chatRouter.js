@@ -1,12 +1,14 @@
 import { Router } from "express";
 import asyncHandler from "express-async-handler"
 import { chatModel } from "../db/models/chatModel.js";
+import { checkToken } from "../middlewares/checkToken.js";
 
 const chatRouter = Router();
 
 //챗방목록 가져오기
-chatRouter.get('/',asyncHandler(async (req,res,next)=>{
-    const RoomsData = await chatModel.getChatRoom();
+chatRouter.get('/',checkToken,asyncHandler(async (req,res,next)=>{
+    const nickname= req.user.nickname
+    const RoomsData = await chatModel.allChat(nickname);
     res.status(200).json(RoomsData)
 }))
 

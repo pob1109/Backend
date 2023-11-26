@@ -12,7 +12,7 @@ class CommentModel{
             const createdComment = await Comment.create(newComment)
             return createdComment;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
@@ -26,7 +26,7 @@ class CommentModel{
 
             return { result : "deleted" };
         }catch(e){
-            throw err;
+            throw e;
         }
     }
 
@@ -37,7 +37,7 @@ class CommentModel{
             await Comment.deleteMany({postId : new ObjectId(data)});
 
         }catch(e){
-            throw err;
+            throw e;
         }
     }
 
@@ -50,7 +50,7 @@ class CommentModel{
 
             return updatedComment;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
@@ -58,28 +58,27 @@ class CommentModel{
     /* 코멘트 보기 (관리자&마이페이지)
     사용자 닉네임*/
     async findMyComment(data){
-
-        let filter={}
-        if(data.status===1){
-            filter.nickname=data.status.nickname
-        }
-
-        //const MaxPost = Number(pageSize)
-        //const hidePost = (Number(page)-1)*MaxPost
-        const findedMyComment = await Comment.find(filter)
-        //.skip(hidePost).limit(MaxPost).populate('postId');
+        try{
+            let filter={}
+            if(data.status===1){
+                filter.nickname=data.status.nickname
+            }
+            //const MaxPost = Number(pageSize)
+            //const hidePost = (Number(page)-1)*MaxPost
+            const findedMyComment = await Comment.find(filter).populate('postId')//.skip(hidePost).limit(MaxPost);
 
             return findedMyComment;
         }catch(e){
-            throw err;
+            throw e;
         }
-        
+    
+    }
     
 
     /* 모든 코멘트 보기 (관리자)
     사용자 닉네임*/
 
-    async findAllComment(page,pageSize){
+    async findAllComment(){
         try{
             //const MaxPost = Number(pageSize)
             //const hidePost = (Number(page)-1)*MaxPost
@@ -87,7 +86,7 @@ class CommentModel{
         
             return findedAllComment;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
@@ -100,7 +99,7 @@ class CommentModel{
 
             return findedPostComment;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
