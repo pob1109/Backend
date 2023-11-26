@@ -1,8 +1,9 @@
 import { PostSchema } from "../schemas/postSchema.js";
 //import { errGenerator } from "../../../errGenerator.js";
 import mongoose from "mongoose";
-
+import { CommentSchema } from "../schemas/comment-schema.js";
 export const Post = mongoose.model("Post",PostSchema);
+export const Comment = mongoose.model("Comment",CommentSchema);
 const ObjectId = mongoose.Types.ObjectId;
 
 class PostModel{
@@ -13,7 +14,7 @@ class PostModel{
         
             return createdPost;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
@@ -25,13 +26,14 @@ class PostModel{
             const removedPost = await Post.findByIdAndDelete(new ObjectId(data))
             const removedComment = await Comment.deleteMany({postId : new ObjectId(data)});
             
-            if(!removedPost && !removedComment){
+
+            if(!removedPost && removedComment == 0){
                 return { result : null }
             }
 
             return { result : "deleted" };
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
@@ -45,7 +47,7 @@ class PostModel{
 
             return updatedPost;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
@@ -60,7 +62,7 @@ class PostModel{
 
             return findedMyPost;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
@@ -74,7 +76,7 @@ class PostModel{
 
             return findedAllPost;
         }catch(e){
-            throw err;
+            throw e;
         }
 
         
@@ -87,7 +89,7 @@ class PostModel{
 
             return findedAllPost;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
@@ -125,7 +127,7 @@ class PostModel{
 
             return searchResult;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }

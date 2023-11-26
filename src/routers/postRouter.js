@@ -74,7 +74,7 @@ postRouter.get('/', asyncHandler(async (req, res, next) => {
 
 
 //게시글 작성
-postRouter.post('/',checkToken,upload.single('picture'),asyncHandler(async (req, res, next) => { //checkToken, 
+postRouter.post('/',upload.single('picture'),asyncHandler(async (req, res, next) => { //checkToken, 
     let newPost = req.body
     let picture = ""
 

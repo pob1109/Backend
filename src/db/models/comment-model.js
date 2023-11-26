@@ -12,7 +12,7 @@ class CommentModel{
             const createdComment = await Comment.create(newComment)
             return createdComment;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
@@ -26,7 +26,7 @@ class CommentModel{
 
             return { result : "deleted" };
         }catch(e){
-            throw err;
+            throw e;
         }
     }
 
@@ -37,7 +37,7 @@ class CommentModel{
             await Comment.deleteMany({postId : new ObjectId(data)});
 
         }catch(e){
-            throw err;
+            throw e;
         }
     }
 
@@ -50,7 +50,7 @@ class CommentModel{
 
             return updatedComment;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
@@ -65,7 +65,7 @@ class CommentModel{
 
             return findedMyComment;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
@@ -81,7 +81,7 @@ class CommentModel{
         
             return findedAllComment;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
@@ -94,7 +94,7 @@ class CommentModel{
 
             return findedPostComment;
         }catch(e){
-            throw err;
+            throw e;
         }
         
     }
