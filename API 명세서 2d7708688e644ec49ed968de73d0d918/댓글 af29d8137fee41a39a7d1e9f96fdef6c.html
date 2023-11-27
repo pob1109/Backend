@@ -680,14 +680,15 @@ blockquote {
    pageSize : Number</td><td id=":NRK" class=""></td></tr><tr id="02ed10b2-2eb2-487b-8f67-efa92e0af62b"><td id="B&lt;iW" class="" style="width:167px">게시글 댓글</td><td id="W=rw" class="" style="width:69.00000762939453px">GET</td><td id="Swvy" class="" style="width:441.2875061035156px"><mark class="highlight-default"><code>http://kdt-sw-6-team10.elicecoding.com/api/comment/:postId</code></mark></td><td id="jK[:" class="" style="width:92px"></td><td id="JELi" class="" style="width:222px">params = postId : String</td><td id=":NRK" class=""></td></tr><tr id="2ea030d3-290e-4252-966a-f309d7263f28"><td id="B&lt;iW" class="" style="width:167px">댓글 작성</td><td id="W=rw" class="" style="width:69.00000762939453px">POST</td><td id="Swvy" class="" style="width:441.2875061035156px"><code><mark class="highlight-default">http://kdt-sw-6-team10.elicecoding.com/api/comment/:postId</mark></code></td><td id="jK[:" class="" style="width:92px">checkToken</td><td id="JELi" class="" style="width:222px">params = postId : String
 body = {
   content : String
-}</td><td id=":NRK" class=""></td></tr><tr id="54b45c8f-11f8-4e45-8732-742ef4bc1b41"><td id="B&lt;iW" class="" style="width:167px">댓글 수정</td><td id="W=rw" class="" style="width:69.00000762939453px">PUT</td><td id="Swvy" class="" style="width:441.2875061035156px"><mark class="highlight-default"><code>http://kdt-sw-6-team10.elicecoding.com/api/comment/:commentId</code></mark></td><td id="jK[:" class="" style="width:92px">checkToken
-sameUser</td><td id="JELi" class="" style="width:222px">params = commentId : String
+}</td><td id=":NRK" class=""></td></tr><tr id="54b45c8f-11f8-4e45-8732-742ef4bc1b41"><td id="B&lt;iW" class="" style="width:167px">댓글 수정</td><td id="W=rw" class="" style="width:69.00000762939453px">PUT</td><td id="Swvy" class="" style="width:441.2875061035156px"><mark class="highlight-default"><code>http://kdt-sw-6-team10.elicecoding.com/api/comment/:commentId</code></mark><mark class="highlight-default">/:userId</mark></td><td id="jK[:" class="" style="width:92px">checkToken
+sameUser</td><td id="JELi" class="" style="width:222px">params = 
+  commentId : String,
+  <mark class="highlight-red_background">userId : String</mark>
 body = {
- <mark class="highlight-red_background"> userId.nickname : String, </mark>
   content : String
-}</td><td id=":NRK" class=""></td></tr><tr id="90be3b4c-d8ea-465c-b41f-53b6e15a32e5"><td id="B&lt;iW" class="" style="width:167px">댓글 삭제</td><td id="W=rw" class="" style="width:69.00000762939453px">DELETE</td><td id="Swvy" class="" style="width:441.2875061035156px"><mark class="highlight-default"><code>http://kdt-sw-6-team10.elicecoding.com/api/comment/:commentId</code></mark></td><td id="jK[:" class="" style="width:92px">checkToken
-sameUser</td><td id="JELi" class="" style="width:222px">params = commentId : String
-body={
-  userId.nickname:String
-}</td><td id=":NRK" class=""></td></tr></tbody></table><p id="74d2a20f-71dc-4829-a6da-b014b436c327" class="">
+}</td><td id=":NRK" class=""></td></tr><tr id="90be3b4c-d8ea-465c-b41f-53b6e15a32e5"><td id="B&lt;iW" class="" style="width:167px">댓글 삭제</td><td id="W=rw" class="" style="width:69.00000762939453px">DELETE</td><td id="Swvy" class="" style="width:441.2875061035156px"><mark class="highlight-default"><code>http://kdt-sw-6-team10.elicecoding.com/api/comment/:commentId</code></mark><mark class="highlight-default">/:userId</mark></td><td id="jK[:" class="" style="width:92px">checkToken
+sameUser</td><td id="JELi" class="" style="width:222px">params = 
+  commentId : String,
+  userId:String
+</td><td id=":NRK" class=""></td></tr></tbody></table><p id="74d2a20f-71dc-4829-a6da-b014b436c327" class="">
 </p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

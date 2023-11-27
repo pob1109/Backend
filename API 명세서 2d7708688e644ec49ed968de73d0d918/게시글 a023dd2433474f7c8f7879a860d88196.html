@@ -691,23 +691,26 @@ word=${word}
   title : String,
   content : String,
 }
-file = picture</td><td id="iDUr" class=""></td></tr><tr id="5f0ee9a3-6665-4600-973c-dd1c22d70801"><td id="`}[y" class="" style="width:185.6527862548828px">게시글 수정</td><td id="&gt;Z?g" class="" style="width:68.65278625488281px">PUT</td><td id="Optb" class="" style="width:438.6180725097656px"><code><mark class="highlight-default">http://kdt-sw-6-team10.elicecoding.com/api/post/:postId</mark></code></td><td id=";aHp" class="">checkToken
-sameUser</td><td id="CxYM" class="" style="width:262px">params = postId : String
+file = picture</td><td id="iDUr" class=""></td></tr><tr id="5f0ee9a3-6665-4600-973c-dd1c22d70801"><td id="`}[y" class="" style="width:185.6527862548828px">게시글 수정</td><td id="&gt;Z?g" class="" style="width:68.65278625488281px">PUT</td><td id="Optb" class="" style="width:438.6180725097656px"><code><mark class="highlight-default">http://kdt-sw-6-team10.elicecoding.com/api/post/:postId</mark></code><mark class="highlight-default">/:userId</mark></td><td id=";aHp" class="">checkToken
+sameUser</td><td id="CxYM" class="" style="width:262px">params =
+     postId : String,
+     <mark class="highlight-default">userId</mark><mark class="highlight-red_background"> : String, 
+</mark>
 body = {
   <mark class="highlight-default">board_category : Number,
   product_category : String,
   event_date : String,
-  event_location : String,
-  userId.</mark><mark class="highlight-red_background">nickname : String, </mark>
+  event_location : String,</mark>
   title : String,
   content : String,
   <mark class="highlight-red_background">isFound : Boolean,</mark>
 }
-file = picture</td><td id="iDUr" class=""></td></tr><tr id="1a00faa3-2da7-4a22-8ce8-79ada2080abb"><td id="`}[y" class="" style="width:185.6527862548828px">게시글 삭제</td><td id="&gt;Z?g" class="" style="width:68.65278625488281px">DELETE</td><td id="Optb" class="" style="width:438.6180725097656px"><code><mark class="highlight-default">http://kdt-sw-6-team10.elicecoding.com/api/post/:postId</mark></code></td><td id=";aHp" class="">checkToken
-sameUser</td><td id="CxYM" class="" style="width:262px">params = postId : String
-body={
-  userId.nickname:String
-}</td><td id="iDUr" class=""></td></tr><tr id="376072f6-d6de-4c10-acd4-90e0c8beee24"><td id="`}[y" class="" style="width:185.6527862548828px">전체게시글
+
+file = picture</td><td id="iDUr" class=""></td></tr><tr id="1a00faa3-2da7-4a22-8ce8-79ada2080abb"><td id="`}[y" class="" style="width:185.6527862548828px">게시글 삭제</td><td id="&gt;Z?g" class="" style="width:68.65278625488281px">DELETE</td><td id="Optb" class="" style="width:438.6180725097656px"><code><mark class="highlight-default">http://kdt-sw-6-team10.elicecoding.com/api/post/:postId</mark></code><mark class="highlight-default">/:userId</mark></td><td id=";aHp" class="">checkToken
+sameUser</td><td id="CxYM" class="" style="width:262px">params = 
+      postId : String
+      userId:String
+</td><td id="iDUr" class=""></td></tr><tr id="376072f6-d6de-4c10-acd4-90e0c8beee24"><td id="`}[y" class="" style="width:185.6527862548828px">전체게시글
 (관리자용&amp;마이페이지용)</td><td id="&gt;Z?g" class="" style="width:68.65278625488281px">GET</td><td id="Optb" class="" style="width:438.6180725097656px"><mark class="highlight-default"><code>http://kdt-sw-6-team10.elicecoding.com/api/post/page/</code></mark><del><mark class="highlight-default"><code>?page=${page}&amp;pageSize=${pageSize}</code></mark></del></td><td id=";aHp" class="">checkToken
 </td><td id="CxYM" class="" style="width:262px">query = 
    page : Number
