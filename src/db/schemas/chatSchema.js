@@ -1,45 +1,37 @@
 import { Schema } from "mongoose";
 
-const ChatSchema = new Schema(
+export const ChatSchema = new Schema(
   {
-    nickname: {
+    "room_Id": {
       type: String,
       required: true,
     },
-    timestamp: {
-      type: Date,
-      default: Date.now,
-    },
-    content: {
-      type: String,
-      required: true,
-    },
-    chatRoomId:{
-      type : String,
-      required : true
-    }
-  },
-  { _id: false }
-);
-
-const ChatRoomSchema = new Schema(
-  {
-    nickname: {
-      type: String,
-      required: true,
-      
-    },
-    with: {
-      type: String,
+    "content": {  // json[]
+      type: Array,
       required: true,
     },
   },
   {
-    timestamps: true,
+    "timestamp": true,
     collection: "chat",
   }
-);
+)
 
-export { ChatSchema };
-
+// Chat_wrap
+export const ChatWrapSchema = new Schema(
+  {
+    "user_Id": {
+      type: String,
+      required: true,
+    },
+    "room_Id": {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    "timestamp": date,
+    collection: "chatRoom",
+  }
+)
 

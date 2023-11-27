@@ -59,6 +59,18 @@ class CommentModel{
         
     }
 
+    // 회원 탈퇴 시 코멘트 삭제
+    async userDeleteComment(data){
+        try{
+            const deletedComment
+             = await Comment.deleteMany({_id : data._id});
+
+            return ;
+        }catch(e){
+            throw e;
+        }
+    }
+
     /* 코멘트 보기 (관리자&마이페이지)
     사용자 닉네임*/
     async findMyComment(data){
