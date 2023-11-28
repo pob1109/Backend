@@ -11,7 +11,7 @@ const ChatWrapSchema = new Schema(
         ref: "Chat",
         required: true,
       },
-      oppenent: {
+      opponent: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true,

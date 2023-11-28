@@ -21,32 +21,25 @@ const transport = nodemailer.createTransport({
 
 class UserModel{
     async getUsers(){ //전체 유저를 현재page 기준으로 pageSize만큼만 전송
-        try{
-            //const MaxPost = Number(pageSize)
-            //const hidePost = (Number(page)-1)*MaxPost
+
             const usersData = await User.find({})
             
-            //.skip(hidePost).limit(MaxPost);
             return usersData;
-        }catch(err){
-            throw err
-        }
+
     }
 
 
     async loginUser(userId){ //email과 패스워드를 확인하고 userId 기준으로 토큰 발행
-        try{
+
             const token= jwt.sign({userId},process.env.jwt_key,{expiresIn:"3h"});
             return token;
-        }catch(err){
-            throw err;
-        }
+
     }
 
 
     async joinUser(email,nickname,password){ //회원가입
         
-        try{
+
             const hashedPassword = await bcrypt.hash(password, 5);
             const newUser = {
                 email:email,
@@ -55,14 +48,11 @@ class UserModel{
             }
             await User.create(newUser);
             return;
-        }catch(err){
-            throw err;
-        }
+
     }
 
     async updateUser(userData,email,nickname,password,newPassword,profileImg){ //회원정보 수정
-        
-        try{
+
             let hashedPassword =undefined;
             let check=false;
             if(password){
@@ -80,32 +70,27 @@ class UserModel{
 
             await User.updateOne(userData,newUser);
             return;
-        }catch(err){
-            throw err;
-        }
+
     }
 
     async delUser(userData){ // 유저 삭제
-        try{
+
             await User.deleteOne(userData);
             return;
-        }catch(err){
-            throw err;
-        }
+
     }
 
     async delAdminUser(id){ // 유저 삭제(관리자용)
-        try{
+
             await User.findByIdAndDelete(new ObjectId(id));
             return;
-        }catch(err){
-            throw err;
-        }
+
     }
 
     async findPassword(email){
-        try{
+
             const userData = await User.findOne({email})
+            
             if(!userData){
                 throw errGenerator("해당 이메일의 유저가 존재하지 않습니다.",404,{})
             }
@@ -125,9 +110,6 @@ class UserModel{
 
             return;
 
-        }catch(err){
-            throw err;
-        }
     }
 }
 
