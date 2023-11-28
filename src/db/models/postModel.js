@@ -40,7 +40,7 @@ class PostModel{
     async userDeletePost(data){
         try{
             const deletedPost
-             = await Post.deleteMany({_id : data._id});
+             = await Post.deleteMany({userId : data._id});
 
             return ;
         }catch(e){

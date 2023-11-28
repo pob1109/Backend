@@ -63,7 +63,7 @@ class CommentModel{
     async userDeleteComment(data){
         try{
             const deletedComment
-             = await Comment.deleteMany({_id : data._id});
+             = await Comment.deleteMany({userId : data._id});
 
             return ;
         }catch(e){
