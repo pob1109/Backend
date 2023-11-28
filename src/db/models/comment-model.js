@@ -64,6 +64,8 @@ class CommentModel{
         try{
             const deletedComment
              = await Comment.deleteMany({userId : data._id});
+            //await Comment.deleteMany({userId : new ObjectId(data)});
+
 
             return ;
         }catch(e){

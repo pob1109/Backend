@@ -39,8 +39,8 @@ class PostModel{
     // 회원 탈퇴 시 게시글 삭제
     async userDeletePost(data){
         try{
-            const deletedPost
-             = await Post.deleteMany({userId : data._id});
+            await Post.deleteMany({userId : data._id});
+            //await Post.deleteMany({userId : new ObjectId(data)});
 
             return ;
         }catch(e){
