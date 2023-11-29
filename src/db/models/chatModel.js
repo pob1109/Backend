@@ -32,12 +32,11 @@ class ChatModel {
     }
 
     //채팅 작성
-    async sendMessage(roomId,content,nickname,timestamps){
+    async sendMessage(roomId,content,nickname){
 
             const data={
                 nickname,
-                content,
-                timestamps
+                content
             }
 
             await Chat.findByIdAndUpdate(new ObjectId(roomId),{$push:{content:data}})

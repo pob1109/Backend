@@ -9,7 +9,7 @@ export const duplicateCheckUser = asyncHandler(async (req,res,next)=>{
         const sameData = await User.findOne({$or:[{email},{nickname}]})
 
         if(sameData){
-                throw errGenerator("이메일이나 닉네임이 중복되는 유저가 존재합니다.",409,{});
+                throw errGenerator("사용할 수 없는 닉네임 또는 이메일입니다.",409,{});
         }
 
         next();
