@@ -8,53 +8,70 @@ class CommentModel{
     /* 새 코멘트 생성
     { 사용자 닉네임, 내용(콘텐트), 게시글id } */
     async createComment(newComment){
-        const createdComment = await Comment.create(newComment)
         
-        return createdComment;
+            const createdComment = await Comment.create(newComment)
+            return createdComment;
+
+        
     }
 
     /* 코멘트 삭제
     코멘트 id*/
     async removeComment(data){
-        const removedComment
-         = await Comment.findByIdAndDelete(new ObjectId(data));
+       
+            const removedComment
+            = await Comment.findByIdAndDelete(new ObjectId(data));
+            
+            if(!removedComment ){
+                return { result : null }
+            }
 
-        return { result : "deleted" };
+            return { result : "deleted" };
+
+    }
+
+    /*게시글 삭제 시 
+    포스트 id*/
+    async removeAllComment(data){
+     
+            await Comment.deleteMany({postId : new ObjectId(data)});
+
     }
 
     /* 코멘트 수정
     코멘트 id, 업데이트할 내용(콘텐트)*/
     async updateComment({content, commentId}){
-        const updatedComment
-         = await Comment.findByIdAndUpdate(new ObjectId(commentId),{content})
+ 
+            const updatedComment
+            = await Comment.findByIdAndUpdate(new ObjectId(commentId),{content})
 
-        return updatedComment;
+            return updatedComment;
+        
     }
 
     /* 코멘트 보기 (관리자&마이페이지)
     사용자 닉네임*/
     async findMyComment(data){
+  
+            let filter={}
+            if(data.status===1){
+                filter.userId=data._id
 
-        let filter={}
-        if(data.status===1){
-            filter.nickname=data.status.nickname
-        }
+            const findedMyComment = await Comment.find(filter).populate('postId').populate('userId')
 
-        //const MaxPost = Number(pageSize)
-        //const hidePost = (Number(page)-1)*MaxPost
-        const findedMyComment = await Comment.find(filter)
-        //.skip(hidePost).limit(MaxPost).populate('postId');
+            return findedMyComment;
 
-        return findedMyComment;
-    }
-
+    }}
 
     /* 글에서 코멘트 보기
     게시글id */
     async findPostComment(data){
-        const findedPostComment = await Comment.find({postId:data}).populate('postId')
 
-        return findedPostComment;
+            const findedPostComment = await Comment.find({postId:data}).populate('postId').populate('userId')
+
+            return findedPostComment;
+
+        
     }
 }
 

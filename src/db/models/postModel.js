@@ -1,37 +1,43 @@
 import { PostSchema } from "../schemas/postSchema.js";
 //import { errGenerator } from "../../../errGenerator.js";
 import mongoose from "mongoose";
-
 export const Post = mongoose.model("Post",PostSchema);
+
 const ObjectId = mongoose.Types.ObjectId;
 
 class PostModel{
     /* 새 게시글 생성 */
     async createPost(postInfo){
-        const createdPost = await Post.create(postInfo)
+
+            const createdPost = await Post.create(postInfo)
         
-        return createdPost;
+            return createdPost;
+
     }
 
     /* 게시글 삭제
     게시글 id*/
     async removePost(data){
-        const removedPost = await Post.findByIdAndDelete(new ObjectId(data))
 
-        if(!removedPost){
-            return { result : null }
-        }
+            const removedPost = await Post.findByIdAndDelete(new ObjectId(data))
+           
+            if(!removedPost ){
+                return { result : null }
+            }
 
-        return { result : "deleted" };
+            return { result : "deleted" };
+
     }
 
     /* 게시글 변경
      업데이트할 게시글 내용, object화 id*/
     async updatePost(postId,data){
-        const updatedPost
-         = await Post.findByIdAndUpdate(new ObjectId(postId),data,{new:true})
 
-        return updatedPost;
+            const updatedPost
+             = await Post.findByIdAndUpdate(new ObjectId(postId),data,{new:true})
+
+            return updatedPost;
+        
     }
 
     /* 게시글 보기 (관리자&마이페이지)
@@ -40,29 +46,29 @@ class PostModel{
 
         let filter={}
         if(data.status===1){ 
-            filter.nickname=data.status.nickname
+            filter.userId=data._id
         }
 
-        ///const MaxPost = Number(pageSize)
-        //const hidePost = (Number(page)-1)*MaxPost
-        const findedMyPost = await Post.find(filter)
-        //.skip(hidePost).limit(MaxPost);
+        const findedMyPost = await Post.find(filter).populate('userId')
 
-        return findedMyPost;
+
+            return findedMyPost;
+        
     }
 
 
     /* 게시글 보기 (id)*/
     async findPost(data){
-        const findedAllPost = await Post.findById(new ObjectId(data))
 
-        return findedAllPost;
+            const findedAllPost = await Post.findById(new ObjectId(data)).populate('userId')
+
+            return findedAllPost;
+
     }
 
     /* 게시글 검색 -> 반환값이 무조건 빈배열 */
-    async searchPost(data){
-        const { word, board_category, product_category, event_date, event_location} = data;
-        console.log(data)
+    async searchPost({ word, board_category, product_category, event_date, event_location}){
+
         let filter = {};
         if(word){
              filter={$or:[
@@ -84,17 +90,17 @@ class PostModel{
         if(event_location){
             filter.event_location = event_location;
         }
-        console.log(filter)
 
-        //const MaxPost = Number(pageSize)
-        //const hidePost = (Number(page)-1)*MaxPost
 
-        const searchResult = await Post.find(filter)
-        //.skip(hidePost).limit(MaxPost);
+            //const MaxPost = Number(pageSize)
+            //const hidePost = (Number(page)-1)*MaxPost
 
-        return searchResult;
+            const searchResult = await Post.find(filter).populate('userId')//.skip(hidePost).limit(MaxPost);
+
+            return searchResult;
+
     }
-}
 
+}
 const postModel = new PostModel();
 export { postModel };
