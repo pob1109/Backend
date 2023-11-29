@@ -29,6 +29,18 @@ class PostModel{
 
     }
 
+    // 회원 탈퇴 시 게시글 삭제
+    async userDeletePost(data){
+        try{
+            await Post.deleteMany({userId : data._id});
+            //await Post.deleteMany({userId : new ObjectId(data)});
+
+            return ;
+        }catch(e){
+            throw e;
+        }
+    }
+
     /* 게시글 변경
      업데이트할 게시글 내용, object화 id*/
     async updatePost(postId,data){
