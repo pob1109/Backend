@@ -15,9 +15,13 @@ class CommentModel {
     /* 코멘트 삭제
     코멘트 id*/
     async removeComment(data) {
-        const removedComment = await Comment.findByIdAndDelete(
+        /*const removedComment = await Comment.findByIdAndDelete(
             new ObjectId(data)
-        );
+        );*/
+
+        const removedComment = await Comment.deleteMany({
+            $or: [{ _id: new ObjectId(data) }, { parentId: data }],
+        });
 
         if (!removedComment) {
             return { result: null };
@@ -57,13 +61,12 @@ class CommentModel {
         let filter = {};
         if (data.status === 1) {
             filter.userId = data._id;
-
-            const findedMyComment = await Comment.find(filter)
-                .populate("postId")
-                .populate("userId");
-
-            return findedMyComment;
         }
+        const findedMyComment = await Comment.find(filter)
+            .populate("postId")
+            .populate("userId");
+
+        return findedMyComment;
     }
 
     /* 글에서 코멘트 보기

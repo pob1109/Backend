@@ -2,11 +2,12 @@ import { Schema } from "mongoose";
 
 const MessageSchema = new Schema(
     {
-        nickname: {
-            type: String,
+        userId: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
             required: true,
         },
-        text: {
+        content: {
             type: String,
             required: true,
         },
