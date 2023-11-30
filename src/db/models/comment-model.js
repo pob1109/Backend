@@ -24,7 +24,12 @@ class CommentModel{
             const removedComment
             = await Comment.findByIdAndDelete(new ObjectId(data));
             
-            if(!removedComment ){
+            const removeCommentComment
+            = await Comment.deleteMany({parentId : new ObjectId(data)})
+
+            //_id:new ObjectId(data) &&
+
+            if(!removedComment){
                 return { result : null }
             }
 
@@ -91,17 +96,27 @@ class CommentModel{
         }
     }
 
-    /* 글에서 코멘트 보기
+    /* 글에서 코멘트 보기 (댓글만)
     게시글id */
     async findPostComment(data){
         try{
-            const findedPostComment = await Comment.find({postId:data}).populate('postId').populate('userId')
+            const findedPostComment = await Comment.find({ postId: data, parentId:":parentId" }).populate('postId').populate('userId')
 
             return findedPostComment;
         }catch(e){
             throw e;
         }
         
+    }
+
+    //대댓글만 가져오기 postId, parentId
+    async findCommentComment({postId, parentId}){
+        try{
+            const findedPostComment = await Comment.find({postId:postId, parentId:parentId}).populate('postId').populate('userId')
+            return findedPostComment;
+        }catch(e){
+            throw e;
+        }
     }
 }
 
