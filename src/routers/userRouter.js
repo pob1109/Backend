@@ -59,18 +59,7 @@ userRouter.put('/',checkToken,duplicateCheckUser,asyncHandler(async (req,res,nex
         res.status(201).send("success")
 }))
 
-//유저탈퇴
-// userRouter.delete('/',checkToken, asyncHandler( async (req,res,next)=>{
-//         const userData = req.user;
-        
-//         await postModel.userDeletePost(userData);       // userData._id
-//         await commentModel.userDeleteComment(userData);
-
-//         await userModel.delUser(userData);
-//         res.status(204).send("success"); 
-//         //.cookie("loginToken","",{httpOnly:true,maxAge:0})
-// }))
-
+//유저 탈퇴
 userRouter.delete('/',checkToken, asyncHandler( async (req,res,next)=>{
         const userId = req.user._id;
         
@@ -89,7 +78,5 @@ userRouter.delete('/:userId',checkToken,isAdmin,asyncHandler(async (req,res,next
         await deleteService.userDelete(userId);  
         res.status(204).send("success");
 }))
-
-
 
 export {userRouter};
