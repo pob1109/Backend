@@ -62,7 +62,7 @@ userRouter.put('/',checkToken,duplicateCheckUser,asyncHandler(async (req,res,nex
 userRouter.delete('/',checkToken, asyncHandler( async (req,res,next)=>{
         const userId = req.user._id;
         
-        await deleteService.userDeletePost(userId);       
+        await deleteService.userDelete(userId);       
 
         await userModel.delUser(userId);
         res.status(204).send("success"); 
@@ -73,8 +73,8 @@ userRouter.delete('/',checkToken, asyncHandler( async (req,res,next)=>{
 //회원강제탈퇴(관리자용)
 userRouter.delete('/:userId',checkToken,isAdmin,asyncHandler(async (req,res,next)=>{
         const userId = req.params.userId;
-        
-        await deleteService.userDeletePost(userId);       
+
+        await deleteService.userDelete(userId);       
 
         await userModel.delUser(userId);
         res.status(204).send("success");

@@ -3,7 +3,7 @@ import { Post } from "../db/models/postModel.js";
 
 class DeleteService {
     // 회원 탈퇴 시 게시글&코멘트 삭제
-    async userDeletePost(userId) {
+    async userDelete(userId) {
 
         await Post.deleteMany({userId});
         await Comment.deleteMany({userId});
